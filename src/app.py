@@ -11,8 +11,8 @@ from pygame.locals import *
 pygame.init()
 
 #HERE YOU CAN CHANGE THE IMAGE UR SOURCING
-backgrd_img = pygame.image.load("images/Rengoku.jpg")
-img_2 = pygame.image.load("images/cube.jpg")
+backgrd_img = pygame.image.load("images/cube.jpg")
+img_2 = pygame.image.load("images/Rengoku.jpg")
 img_3 = pygame.image.load("images/gojo.jpg")
 
 
