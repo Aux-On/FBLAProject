@@ -19,7 +19,7 @@ class Menu:
         click = False
         running = True
         while running:
-            self.surface.fill((0,0,0))
+            self.surface.blit(self.background_img,(0,0))
 
             mx,my = pygame.mouse.get_pos()
 
