@@ -26,7 +26,7 @@ image_index = 0
 
 game_index = 0
 
-menu = Menu(screen,backgrd_img,img_2,img_3)
+menu = Menu(clock,screen,backgrd_img,img_2,img_3)
 
 
 def game(image_index,screen):
@@ -67,11 +67,15 @@ def game(image_index,screen):
         clock.tick(60)
 
 
+frame = 0
+
 while True:
+
+    frame += 1
 
     if game_index == 0:
         pygame.mixer.quit()
-        game_index = menu.main_menu(clock,(130,170), (130,220))
+        game_index = menu.main_menu((130,170), (130,220))
     if game_index == 1:
         pygame.mixer.init()
         game_index = game(image_index,screen)

@@ -6,13 +6,14 @@ from pygame.locals import *
 
 class Menu:
 
-    def __init__(self, surface, background_img, buttonInitImg, buttonFinalImg):
+    def __init__(self, clock, surface, background_img, buttonInitImg, buttonFinalImg):
         self.surface = surface
         self.background_img = background_img
         self.buttonInitImg = buttonInitImg
         self.buttonFinalImg = buttonFinalImg
+        self.clock = clock
 
-    def main_menu(self,clock, location_b1, location_b2):
+    def main_menu(self, location_b1, location_b2):
 
         index = 0
 
@@ -53,4 +54,4 @@ class Menu:
                         click = True
 
             pygame.display.update()
-            clock.tick(60)
+            self.clock.tick(60)
