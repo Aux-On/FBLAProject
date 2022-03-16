@@ -11,9 +11,9 @@ from pygame.locals import *
 pygame.init()
 
 #HERE YOU CAN CHANGE THE IMAGE UR SOURCING
-backgrd_img = pygame.image.load("images/Template.jpg")
-img_2 = pygame.image.load("images/button2.jpg")
-img_3 = pygame.image.load("images/button1.jpg")
+backgrd_img = pygame.transform.scale(pygame.image.load("images/Template.jpg"),(720,640))
+img_2 = pygame.transform.scale(pygame.image.load("images/button2.jpg"),(380,40))
+img_3 = pygame.transform.scale(pygame.image.load("images/button1.jpg"),(380,40))
 
 
 #CAN CHANGE WINDOW SIZE (WIDTH , HEIGHT)
@@ -71,7 +71,7 @@ while True:
 
     if game_index == 0:
         pygame.mixer.quit()
-        game_index = menu.main_menu(clock,(13,17), (13,22))
+        game_index = menu.main_menu(clock,(130,170), (130,220))
     if game_index == 1:
         pygame.mixer.init()
         game_index = game(image_index,screen)
