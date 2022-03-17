@@ -32,8 +32,8 @@ def false_to_true(bool):
 
 #Want: Input: base folder of animations, desired length of each animation output: animation for given frame
 #is meant only to be called once
-#Returns normal animation list, flipped lisst, and jumped list
-def process_animations(animation_base_path, extentiontype, second_durations):
+#Returns normal animation list, flipped list, and jumped list
+def process_animations(animation_base_path, extentiontype, second_durations_idle, second_durations_moving):
     global frames_per_second
     animation_name = animation_base_path.split("/")[-1]
     animation_rawpath = []
@@ -42,19 +42,37 @@ def process_animations(animation_base_path, extentiontype, second_durations):
     animation_list = []
     animation_list_flipped = []
 
+    frame_durations_idle = []
+    animations_idle = []
+    animations_idle_flipped = []
+    animation_rawpath_idle = []
+    animation_idle_id = []
+
     n = 0
-    for item in second_durations:
-        frame_durations.append((second_durations[n]*frames_per_second))
+    for item in second_durations_moving:
+        frame_durations.append((second_durations_moving[n]*frames_per_second))
+        n += 1
+
+    n = 0
+    for item in second_durations_idle:
+        frame_durations_idle.append((second_durations_idle[n]*frames_per_second))
         n += 1
 
 
     for frame in range(len(frame_durations)):
-        animation_rawpath.append(animation_base_path + "/" + animation_name + "_%s" + extentiontype %frame)
+        animation_rawpath.append(animation_base_path + "/" + "moving/" + animation_name + "_%s" + extentiontype %frame)
+
+    for frame in range(len(frame_durations_idle)):
+        animation_rawpath_idle.append(animation_base_path + "/" + "idle/" + animation_name + "_%s" + extentiontype %frame)
 
     n = 0
     for image in animation_rawpath:
         animation_id.append(animation_rawpath[n])
         n += 1
+
+    n = 0
+    for image in animation_rawpath_idle:
+        animation_idle_id.append(animation_rawpath_idle[n])
 
     n = 0
     for duration in frame_durations:
@@ -63,36 +81,56 @@ def process_animations(animation_base_path, extentiontype, second_durations):
         n += 1
 
     n = 0
+    for duration in frame_durations_idle:
+        for fram in range(duration):
+            animations_idle.append(pygame.image.load(animation_idle_id[n]))
+        n += 1
+
+    n = 0
     for duration in frame_durations:
         for frame in range(duration):
             animation_list_flipped.append(pygame.transform.flip(pygame.image.load(animation_id[n]),True,False))
         n += 1
 
-    return animation_list, animation_list_flipped, pygame.image.load(animation_base_path + "/" + animation_name + "_jump" + extentiontype)
+    n = 0
+    for duration in frame_durations_idle:
+        for frame in range(duration):
+            animation_list_flipped.append(pygame.transform.flip(pygame.image.load(animation_idle_id[n]), True, False))
+        n += 1
+
+    return animation_list, animation_list_flipped, pygame.image.load(animation_base_path + "/" + animation_name + "_jump" + extentiontype), animations_idle, animations_idle_flipped
 
 
 #set equal to frame,flip (init frame rate at 0) and flip init = False
-def load_object_animations(screen, frame, flip, animation_list, animation_list_flipped, jump_animation, objectmovementxy, objectxy):
-    if flip == False:
-        if objectmovementxy[1] != 0:
-            screen.blit(jump_animation, objectxy)
+def load_object_animations(screen, move_frame,idle_frame, flip, animation_list, animation_list_flipped, jump_animation, objectmovementxy, objectxy, animation_idle_list, animation_idle_flipped):
+    if objectmovementxy == [0,0]:
+        if flip == False:
+            screen.blit(animation_idle_list[idle_frame])
         else:
-            screen.blit(animation_list[frame], objectxy)
-    if flip == True:
-        if objectmovementxy[1] != 0:
-            screen.blit(pygame.transform.flip(jump_animation,True,False), objectxy)
-        else:
-            screen.blit(animation_list_flipped[frame], objectxy)
-
+            screen.blit(animation_idle_flipped[idle_frame])
+    else:
+        if flip == False:
+            if objectmovementxy[1] != 0:
+                screen.blit(jump_animation, objectxy)
+            else:
+                screen.blit(animation_list[move_frame], objectxy)
+        if flip == True:
+            if objectmovementxy[1] != 0:
+                screen.blit(pygame.transform.flip(jump_animation,True,False), objectxy)
+            else:
+                screen.blit(animation_list_flipped[move_frame], objectxy)
 
     if objectmovementxy[0] > 0:
         flip = False
     if objectmovementxy[0] < 0:
         flip = True
-    frame += 1
-    if frame >= len(animation_list):
-        frame = 0
-    return frame, flip
+    move_frame += 1
+    idle_frame += 1
+    if move_frame >= len(animation_list):
+        move_frame = 0
+    if idle_frame >= len(animation_idle_list):
+        idle_frame = 0
+    return move_frame, idle_frame, flip
 
 
 def read_map(path):
