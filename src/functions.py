@@ -1,13 +1,99 @@
 import pygame, sys
-
 from pygame.locals import *
+
+
+
+global frames_per_second
+global flip
+
+##Constants
+frames_per_second = 30
+
+
+def is_divisible(Dividend, Divisor):
+    if ((Dividend % Divisor) != 0):
+        return False
+    else:
+        return True
 
 def renderImageCartesian(display, pygame_image, cartesian_coordinates):
     display.blit(pygame_image,cartesian_coordinates)
 
-def load_animations(animation_base_path, frame_durations):
+def is_positive(value):
+    if value > 0:
+        return True
+    if value < 0:
+        return False
+def false_to_true(bool):
+    if bool == True:
+        return False
+    if bool == False:
+        return True
+
+#Want: Input: base folder of animations, desired length of each animation output: animation for given frame
+#is meant only to be called once
+#Returns normal animation list, flipped lisst, and jumped list
+def process_animations(animation_base_path, extentiontype, second_durations):
+    global frames_per_second
     animation_name = animation_base_path.split("/")[-1]
-    animation_fram_data = []
+    animation_rawpath = []
+    animation_id = []
+    frame_durations = []
+    animation_list = []
+    animation_list_flipped = []
+
+    n = 0
+    for item in second_durations:
+        frame_durations.append((second_durations[n]*frames_per_second))
+        n += 1
+
+
+    for frame in range(len(frame_durations)):
+        animation_rawpath.append(animation_base_path + "/" + animation_name + "_%s" + extentiontype %frame)
+
+    n = 0
+    for image in animation_rawpath:
+        animation_id.append(animation_rawpath[n])
+        n += 1
+
+    n = 0
+    for duration in frame_durations:
+        for frame in range(duration):
+            animation_list.append(pygame.image.load(animation_id[n]))
+        n += 1
+
+    n = 0
+    for duration in frame_durations:
+        for frame in range(duration):
+            animation_list_flipped.append(pygame.transform.flip(pygame.image.load(animation_id[n]),True,False))
+        n += 1
+
+    return animation_list, animation_list_flipped, pygame.image.load(animation_base_path + "/" + animation_name + "_jump" + extentiontype)
+
+
+#set equal to frame,flip (init frame rate at 0) and flip init = False
+def load_object_animations(screen, frame, flip, animation_list, animation_list_flipped, jump_animation, objectmovementxy, objectxy):
+    if flip == False:
+        if objectmovementxy[1] != 0:
+            screen.blit(jump_animation, objectxy)
+        else:
+            screen.blit(animation_list[frame], objectxy)
+    if flip == True:
+        if objectmovementxy[1] != 0:
+            screen.blit(pygame.transform.flip(jump_animation,True,False), objectxy)
+        else:
+            screen.blit(animation_list_flipped[frame], objectxy)
+
+
+    if objectmovementxy[0] > 0:
+        flip = False
+    if objectmovementxy[0] < 0:
+        flip = True
+    frame += 1
+    if frame >= len(animation_list):
+        frame = 0
+    return frame, flip
+
 
 def read_map(path):
     file = open(path, 'r')
