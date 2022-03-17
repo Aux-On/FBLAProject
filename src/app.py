@@ -27,7 +27,7 @@ image_index = 0
 
 game_index = 0
 
-player_image = pygame.image.load("images/Guy.jpg")
+player_image = pygame.image.load("images/Guyy.jpg")
 dirt_image = pygame.image.load("images/Dirt1.jpg")
 grass_image = pygame.image.load("images/Grass1.jpg")
 
