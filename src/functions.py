@@ -17,17 +17,58 @@ def is_divisible(Dividend, Divisor):
 def renderImageCartesian(display, pygame_image, cartesian_coordinates):
     display.blit(pygame_image,cartesian_coordinates)
 
+def is_positive(value):
+    if value > 0:
+        return True
+    if value < 0:
+        return False
+def false_to_true(bool):
+    if bool == True:
+        return False
+    if bool == False:
+        return True
 
 #Want: Input: base folder of animations, desired length of each animation output: animation for given frame
 #is meant only to be called once
-def load_animations(animation_base_path, frame_durations, is_xMove_conditional, is_yMove_conditional, Movementxy):
+#Returns flipped
+def load_animations(animation_base_path, extentiontype, second_durations, is_xMove_conditional, is_yMove_conditional, move_y_image_path, movementxy):
     animation_name = animation_base_path.split("/")[-1]
-    animation_fram_data = []
+    animation_rawpath = []
+    animation_id = []
+    frame_durations = []
+    animation_list = []
+    animation_list_flipped = []
 
-    if is_xMove_conditional:
-        pass
-    if is_yMove_conditional:
-        pass
+    n = 0
+    for item in second_durations:
+        frame_durations.append((second_durations[n]*frames_per_second))
+        n += 1
+
+
+    for frame in range(len(frame_durations)):
+        animation_rawpath.append(animation_base_path + "/" + animation_name + "_%s" + extentiontype %frame)
+
+    n = 0
+    for image in animation_rawpath:
+        animation_id.append(animation_rawpath[n])
+        n += 1
+
+    n = 0
+    for duration in frame_durations:
+        for frame in range(duration):
+            animation_list.append(pygame.image.load(animation_id[n]))
+        n += 1
+
+    n = 0
+    for duration in frame_durations:
+        for frame in range(duration):
+            animation_list_flipped.append(pygame.transform.flip(pygame.image.load(animation_id[n]),True,False))
+        n += 1
+
+    return animation_list, animation_list_flipped, animation_base_path + "/" + animation_name + "_jump" + extentiontype
+
+
+
 
 def read_map(path):
     file = open(path, 'r')
