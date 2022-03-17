@@ -54,4 +54,4 @@ class Menu:
                         click = True
 
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(30)

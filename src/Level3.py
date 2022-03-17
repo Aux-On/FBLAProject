@@ -116,5 +116,5 @@ class Level3:
             surf = pygame.transform.scale(self.display, (720,640))
             self.screen.blit(surf,(0,0))
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(30)
 
