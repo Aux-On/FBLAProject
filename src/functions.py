@@ -1,13 +1,33 @@
 import pygame, sys
-
 from pygame.locals import *
+
+
+
+global frames_per_second
+
+##Constants
+frames_per_second = 30
+
+def is_divisible(Dividend, Divisor):
+    if ((Dividend % Divisor) != 0):
+        return False
+    else:
+        return True
 
 def renderImageCartesian(display, pygame_image, cartesian_coordinates):
     display.blit(pygame_image,cartesian_coordinates)
 
-def load_animations(animation_base_path, frame_durations):
+
+#Want: Input: base folder of animations, desired length of each animation output: animation for given frame
+#is meant only to be called once
+def load_animations(animation_base_path, frame_durations, is_xMove_conditional, is_yMove_conditional, Movementxy):
     animation_name = animation_base_path.split("/")[-1]
     animation_fram_data = []
+
+    if is_xMove_conditional:
+        pass
+    if is_yMove_conditional:
+        pass
 
 def read_map(path):
     file = open(path, 'r')

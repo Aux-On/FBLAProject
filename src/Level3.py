@@ -67,7 +67,7 @@ class Level3:
             if self.moving_left:
                 player_movement[0] -= 1
             player_movement[1] += self.player_dy
-            self.player_dy += .2
+            self.player_dy += .8
             if self.player_dy > 3:
                 self.player_dy = 3
 
@@ -102,10 +102,10 @@ class Level3:
                         self.moving_left = True
                     if event.key == K_UP:
                         if self.jump_index == 1:
-                            self.player_dy = -2
+                            self.player_dy = -4
                             self.jump_index += 1
                         if self.air_timer < 6 or self.jump_index == 0:
-                            self.player_dy = -2.5
+                            self.player_dy = -8
                             self.jump_index += 1
                 if event.type == KEYUP:
                     if event.key == K_RIGHT:
@@ -116,5 +116,5 @@ class Level3:
             surf = pygame.transform.scale(self.display, (720,640))
             self.screen.blit(surf,(0,0))
             pygame.display.update()
-            self.clock.tick(30)
+            self.clock.tick(functions.frames_per_second)
 
