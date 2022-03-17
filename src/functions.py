@@ -4,9 +4,11 @@ from pygame.locals import *
 
 
 global frames_per_second
+global flip
 
 ##Constants
 frames_per_second = 30
+flip = False
 
 def is_divisible(Dividend, Divisor):
     if ((Dividend % Divisor) != 0):
@@ -30,8 +32,8 @@ def false_to_true(bool):
 
 #Want: Input: base folder of animations, desired length of each animation output: animation for given frame
 #is meant only to be called once
-#Returns flipped
-def load_animations(animation_base_path, extentiontype, second_durations, is_xMove_conditional, is_yMove_conditional, move_y_image_path, movementxy):
+#Returns normal animation list, flipped lisst, and jumped list
+def process_animations(animation_base_path, extentiontype, second_durations):
     animation_name = animation_base_path.split("/")[-1]
     animation_rawpath = []
     animation_id = []
@@ -65,9 +67,31 @@ def load_animations(animation_base_path, extentiontype, second_durations, is_xMo
             animation_list_flipped.append(pygame.transform.flip(pygame.image.load(animation_id[n]),True,False))
         n += 1
 
-    return animation_list, animation_list_flipped, animation_base_path + "/" + animation_name + "_jump" + extentiontype
+    return animation_list, animation_list_flipped, pygame.image.load(animation_base_path + "/" + animation_name + "_jump" + extentiontype)
 
 
+#set equal to frame rate (init frame rate at 0
+def load_object_animations(screen, frame, flip, animation_list, animation_list_flipped, jump_animation, objectmovementxy, objectxy):
+    if flip == False:
+        if objectmovementxy[1] != 0:
+            screen.blit(jump_animation, objectxy)
+        else:
+            screen.blit(animation_list[frame], objectxy)
+    if flip == True:
+        if objectmovementxy[1] != 0:
+            screen.blit(pygame.transform.flip(jump_animation,True,False), objectxy)
+        else:
+            screen.blit(animation_list_flipped[frame], objectxy)
+
+
+    if objectmovementxy[0] > 0:
+        flip = False
+    if objectmovementxy[0] < 0:
+        flip = True
+    frame += 1
+    if frame >= len(animation_list):
+        frame = 0
+    return frame, flip
 
 
 def read_map(path):
