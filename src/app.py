@@ -1,6 +1,7 @@
 import sys
 
 from src.Menu import Menu
+from src.Level3 import Level3
 
 import pygame
 
@@ -27,6 +28,7 @@ image_index = 0
 game_index = 0
 
 menu = Menu(clock,screen,backgrd_img,img_2,img_3)
+level3 = Level3(clock,screen,player_image,"map/level_3/map_1.txt",dirt_image,grass_image,16)
 
 
 def game(image_index,screen):
@@ -67,11 +69,9 @@ def game(image_index,screen):
         clock.tick(60)
 
 
-frame = 0
 
 while True:
 
-    frame += 1
 
     if game_index == 0:
         pygame.mixer.quit()
@@ -79,7 +79,8 @@ while True:
     if game_index == 1:
         pygame.mixer.init()
         game_index = game(image_index,screen)
-
+    if game_index == 2:
+        game_index = 0
 
 
 
