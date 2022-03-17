@@ -2,11 +2,17 @@ import pygame, functions, sys
 
 from pygame.locals import *
 
+
+
+
+scale_value = 3
+
 class Level3:
 
-    def __init__(self, clock, display, pygame_player_image, game_map_path, pygame_dirt_image, pygame_grass_image, TILE_SIZE):
+    def __init__(self, clock, screen, pygame_player_image, game_map_path, pygame_dirt_image, pygame_grass_image, TILE_SIZE):
         self.clock = clock
-        self.display = display
+        self.screen = screen
+        self.display = pygame.Surface((300,200))
         self.player_image = pygame_player_image
         self.game_map_path = game_map_path
         self.true_scroll = [0,0]
@@ -96,10 +102,10 @@ class Level3:
                         self.moving_left = True
                     if event.key == K_UP:
                         if self.jump_index == 1:
-                            self.player_dy = -1.5
+                            self.player_dy = -2
                             self.jump_index += 1
                         if self.air_timer < 6 or self.jump_index == 0:
-                            self.player_dy = -2
+                            self.player_dy = -2.5
                             self.jump_index += 1
                 if event.type == KEYUP:
                     if event.key == K_RIGHT:
@@ -107,6 +113,8 @@ class Level3:
                     if event.key == K_LEFT:
                         self.moving_left = False
 
+            surf = pygame.transform.scale(self.display, (720,640))
+            self.screen.blit(surf,(0,0))
             pygame.display.update()
             self.clock.tick(60)
 

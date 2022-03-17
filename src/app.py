@@ -27,8 +27,12 @@ image_index = 0
 
 game_index = 0
 
+player_image = pygame.image.load("images/Guy.jpg")
+dirt_image = pygame.image.load("images/Dirt1.jpg")
+grass_image = pygame.image.load("images/Grass1.jpg")
+
 menu = Menu(clock,screen,backgrd_img,img_2,img_3)
-level3 = Level3(clock,screen,player_image,"map/level_3/map_1.txt",dirt_image,grass_image,16)
+level3 = Level3(clock,screen,player_image,"map/level_3/map_0.txt",dirt_image,grass_image,16)
 
 
 def game(image_index,screen):
@@ -78,7 +82,7 @@ while True:
         game_index = menu.main_menu((130,170), (130,220))
     if game_index == 1:
         pygame.mixer.init()
-        game_index = game(image_index,screen)
+        game_index = level3.level3(game_index)
     if game_index == 2:
         game_index = 0
 
