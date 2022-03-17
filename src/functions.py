@@ -8,7 +8,7 @@ global flip
 
 ##Constants
 frames_per_second = 30
-flip = False
+
 
 def is_divisible(Dividend, Divisor):
     if ((Dividend % Divisor) != 0):
@@ -34,6 +34,7 @@ def false_to_true(bool):
 #is meant only to be called once
 #Returns normal animation list, flipped lisst, and jumped list
 def process_animations(animation_base_path, extentiontype, second_durations):
+    global frames_per_second
     animation_name = animation_base_path.split("/")[-1]
     animation_rawpath = []
     animation_id = []
@@ -70,7 +71,7 @@ def process_animations(animation_base_path, extentiontype, second_durations):
     return animation_list, animation_list_flipped, pygame.image.load(animation_base_path + "/" + animation_name + "_jump" + extentiontype)
 
 
-#set equal to frame rate (init frame rate at 0
+#set equal to frame,flip (init frame rate at 0) and flip init = False
 def load_object_animations(screen, frame, flip, animation_list, animation_list_flipped, jump_animation, objectmovementxy, objectxy):
     if flip == False:
         if objectmovementxy[1] != 0:
