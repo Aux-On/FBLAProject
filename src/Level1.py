@@ -32,9 +32,13 @@ class Level1:
 
         self.player_rect = pygame.Rect(1 * self.TILE_SIZE, 1 * self.TILE_SIZE, self.player_image.get_width(), self.player_image.get_height())
         self.game_map = functions.read_map(self.game_map_path)
+        self.animation_list, self.animation_list_flipped, self.jump_image, self.animations_idle, self.animations_idle_flipped = functions.process_animations("images/level_3/Guyy",".png",[5],[5])
 
+        self.moving_player_frame = 0
+        self.idle_player_frame = 0
+        self.flip_player = False
 
-    def level3(self,game_index):
+    def level1(self,game_index):
 
         running = True
 
@@ -76,7 +80,10 @@ class Level1:
             player_rect, collisions = functions.move(self.player_rect, player_movement, tile_rects)
             self.player_image.set_colorkey((255, 255, 255))
 
-            self.display.blit(self.player_image, (self.player_rect.x - scroll[0], self.player_rect.y - scroll[1]))
+            #self.display.blit(self.player_image, (self.player_rect.x - scroll[0], self.player_rect.y - scroll[1]))
+
+            self.moving_player_frame, self.idle_player_frame, self.flip_player = functions.load_object_animations(self.display,self.moving_player_frame,self.idle_player_frame,self.flip_player,self.animation_list,self.animation_list_flipped,self.jump_image,player_movement,(self.player_rect.x - scroll[0], self.player_rect.y - scroll[1]),self.animations_idle,self.animations_idle_flipped)
+            print(self.idle_player_frame,self.moving_player_frame,self.flip_player)
 
             if collisions['bottom']:
                 self.player_dy = 0
