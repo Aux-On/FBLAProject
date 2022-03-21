@@ -84,6 +84,7 @@ class Level3(Level):
         while running:
 
             self.display.fill((146, 244, 255))
+            self.display.blit(pygame.transform.scale(pygame.image.load("images/level_3/map/stickyfingers.png"),[16,16]),[7*16 - (self.player.scroll[0]/2),13*16 - (self.player.scroll[1])])
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
