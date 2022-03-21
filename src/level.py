@@ -90,7 +90,8 @@ class Level3(Level):
 
             if diobox_test:
                 diobox_test = self.dialogue_box("Test",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-
+                self.player.is_movingRight = False
+                self.player.is_movingLeft = False
             for event in pygame.event.get():
                 if event.type == QUIT:
                     running = False
