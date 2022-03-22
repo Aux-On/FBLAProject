@@ -5,10 +5,10 @@ from src import constants, mobs, functions
 from pygame.locals import *
 
 class Level:
-    def __init__(self, clock, display, game_map_location):
+    def __init__(self, clock, screen, game_map_location):
         self.clock = clock
         self.display = pygame.Surface(constants.surface_size)
-        self.screen = display
+        self.screen = screen
         self.player_image = 'images/level_3/Guyy'
         self.game_map_location = game_map_location
         self.TILESIZE = 16
@@ -22,7 +22,7 @@ class Level:
 
         running = True
         while running:
-            self.small_font.render(dialouge_surf,text,(5,6))
+            self.small_font.render(dialouge_surf,text,(10,6))
             self.display.blit(dialouge_surf,locationxy)
             #dialouge_surf.blit(pygame.transform.scale(box, sizexy), (0, 0))
             for event in pygame.event.get():
@@ -51,15 +51,19 @@ class Level3(Level):
 
 
         self.player = mobs.Player(self.player_image,True, [50,50],self.display,[30],[30],[30])
+
+
         self.map_dictionary = {}
         n = 1
         for image in pygame_tile_image_list:
             self.map_dictionary[str(n)] = image
+            # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
             n += 1
 
 
     def loadANDreturn_collidable_tiles(self, colidable_index_list):
         game_map = functions.read_map(self.game_map_location)
+        # list: [ [3,0,0,...] , [3,0,0,...] , ...]
         collidable_tiles = []
 
         y =0
@@ -90,9 +94,10 @@ class Level3(Level):
             self.player.update()
 
             if diobox_test:
-                diobox_test = self.dialogue_box("Test",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                diobox_test = self.dialogue_box("Hello Peter!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     running = False

@@ -96,13 +96,14 @@ class Player(Mobs):
             self.is_moving = True
             self.movement[0] += 1
 
-
-
-        self.playerdy += 1
         if self.playerdy > 2:
             self.playerdy = 2
 
-        self.movement[1] += self.playerdy
+        if self.is_gravity:
+            self.playerdy += 1
+            self.movement[1] += self.playerdy
+
+
 
         self.location[0] += self.movement[0]
         self.location[1] += self.movement[1]
@@ -123,6 +124,7 @@ class Player(Mobs):
             self.is_jumping = True
         if self.collision_types['top']:
             self.playerdy = 0
+
         self.is_moving = False
 
 
