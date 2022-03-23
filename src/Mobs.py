@@ -77,8 +77,11 @@ class Mobs:
 
 
 class Player(Mobs):
-    def __init__(self, image_path, is_collidable, init_xy,display, idle_animation_length_list, moving_animation_length_list, jump_animation_frame_list):
-        Mobs.__init__(self, image_path, is_collidable, init_xy,display, idle_animation_length_list, moving_animation_length_list, jump_animation_frame_list)
+    def __init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
+                 moving_animation_length_list, jump_animation_frame_list):
+        Mobs.__init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
+                      moving_animation_length_list, jump_animation_frame_list)
+
         #super.__init__(image_path, is_collidable, init_xy)
         self.jump_index = 0
         self.is_gravity = True
@@ -153,3 +156,40 @@ class Player(Mobs):
                 self.is_movingLeft = False
             if event.key == K_RIGHT:
                 self.is_movingRight = False
+
+
+#########################################################################################################################
+
+class Slime(Player):
+    def __init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
+                 moving_animation_length_list, jump_animation_frame_list):
+        Mobs.__init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
+                      moving_animation_length_list, jump_animation_frame_list)
+
+    def update(self):
+        self.movement = [0, 0]
+
+        if self.is_movingLeft:
+            self.is_moving = True
+            self.is_flip = False
+            self.movement[0] -= 1
+
+        if self.is_movingRight:
+            self.is_flip = True
+            self.is_moving = True
+            self.movement[0] += 1
+
+        if self.playerdy > 2:
+            self.playerdy = 2
+
+        if self.is_gravity:
+            self.playerdy += 1
+            self.movement[1] += self.playerdy
+
+
+
+        self.location[0] += self.movement[0]
+        self.location[1] += self.movement[1]
+
+        self.adjust_for_collision(self.collidable_tiles)
+        self.load_sprite(self.display)

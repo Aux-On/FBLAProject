@@ -5,13 +5,13 @@ Easy+ 2.) Movement of mobs in a pattern and push back
 
 Mid 4.) Dialogue
 5.) Inventory (Honestly not needed with how short game is)
-6.) Sound sfx? (cave for like water dripping)
+6.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)
 7.) Burning Car cutscene but top priority is first 3 levels!
 8.) Weather effects for Snow (if possible)
 9.) Is the isometric/RPG plan still going?
 10.) Will Sticky Notes disappear after being interacted with?
 11.) Also double check if my tiles look okay please! And I notice the cave tile used in Level 3?
-
+12.) Scoreboard AND Leaderboard after every map vs himself?
 -------------------------------------------------------------------------------------------------------
 
 Easy - 10-20
