@@ -1,3 +1,4 @@
+import random
 import sys, pygame
 
 
@@ -64,6 +65,25 @@ def clip(surf,x,y,x_size,y_size):
     handle_surf.set_clip(clipR)
     image = surf.subsurface(handle_surf.get_clip())
     return image.copy()
+
+
+
+
+
+def generate_clouds (display, number_of_clouds, cloud_images_list, cloud_index, spacing_factor, image_y_locations, scrollxy):
+
+    for i in range(number_of_clouds):
+        display.blit(pygame.image.load(cloud_images_list[cloud_index[i]]),[i*16*spacing_factor - scrollxy[0],image_y_locations[i]- scrollxy[1]])
+
+
+
+def rand_list(a,b,number_of_items):
+    lista = []
+    for i in range(number_of_items):
+        lista.append(random.randint(a,b))
+    return lista
+
+
 
 
 class Font:

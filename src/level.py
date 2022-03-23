@@ -1,4 +1,4 @@
-import sys, pygame
+import sys, pygame, math
 
 from src import constants, mobs, functions
 
@@ -83,12 +83,18 @@ class Level3(Level):
 
     def game(self):
         diobox_test = False
-
         running = True
+
+        cloudyvals = functions.rand_list(8*16,16*16,50)
+        cloud_idexes = functions.rand_list(0,2,50)
+
         while running:
 
-            self.display.fill((146, 244, 255))
-            self.display.blit(pygame.transform.scale(pygame.image.load("images/level_3/map/stickyfingers.png"),[16,16]),[7*16 - (self.player.scroll[0]/2),13*16 - (self.player.scroll[1])])
+
+            self.display.fill((146 + (self.player.scroll[0]*.1), math.fabs(244 - (self.player.scroll[0]*.1)), math.fabs(245 - (self.player.scroll[0]*.1))))
+
+            functions.generate_clouds(self.display,25,['images/cloud.png','images/cloud1.png','images/cloud2.png'], cloud_idexes,5,cloudyvals,self.player.scroll)
+
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
