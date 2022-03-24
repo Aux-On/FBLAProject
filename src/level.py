@@ -140,9 +140,10 @@ class Level3(Level):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    running = False
                     sys.exit()
                 if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
                     if event.key == K_q:
                         diobox_test = True
                 self.player.check_event(event)
@@ -151,19 +152,28 @@ class Level3(Level):
             self.screen.blit(surf, (0, 0))
             pygame.display.update()
             self.clock.tick(constants.game_frames_per_second)
+
+
+
+
+
+
 ########################################################################################################################
 #                                                    SUB CLASS
 ########################################################################################################################
+
+
+
 class Level1(Level):
     def __init__(self, clock, display,game_map_location,pygame_tile_image_list):
         Level.__init__(self, clock, display,game_map_location)
         #super.__init__(clock,display,game_map_location)
 
 
-        self.player = Mobs.Player(self.player_image,True, [50,50],self.display,[30],[30],[30])
+        self.player = Mobs.Player(self.player_image,True, [16*8,13*16+1],self.display,[30],[30],[30])
 
         self.map_dictionary = {}
-        n = 1
+        n = 0
         for image in pygame_tile_image_list:
             self.map_dictionary[str(n)] = image
             # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
@@ -178,7 +188,7 @@ class Level1(Level):
         for row in game_map:
             x = 0
             for tile_num in row:
-                if tile_num != '0' and tile_num != '3':
+                if tile_num != '3':
                     self.display.blit(self.map_dictionary[tile_num], (x*self.TILESIZE - self.player.scroll[0],y*self.TILESIZE - self.player.scroll[1]))
                 if tile_num == '1' or tile_num == '2' or tile_num == '3':
                     collidable_tiles.append(pygame.Rect(x * self.TILESIZE,y * self.TILESIZE,self.TILESIZE,self.TILESIZE))
@@ -210,9 +220,10 @@ class Level1(Level):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    running = False
                     sys.exit()
                 if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
                     if event.key == K_q:
                         diobox_test = True
                 self.player.check_event(event)

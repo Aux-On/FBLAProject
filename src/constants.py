@@ -15,5 +15,7 @@ level_3_background = []
 
 level3_tile_image_list = [pygame.image.load('images/level_3/map/Dirt1.jpg'),pygame.image.load('images/level_3/map/Grass1.jpg')]
 
+level1_tile_image_list = [pygame.image.load('images/level_1/map/caveeee2.png'),pygame.image.load('images/level_1/map/caveee1.png')]
+
 level3_collidable_indexs = [1,2,3]
 
