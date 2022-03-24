@@ -2,7 +2,7 @@ import os
 import sys, pygame
 #from src import functions, mobs, level
 
-game_frames_per_second = 45
+game_frames_per_second = 15
 
 WINDOWSIZE = (900,600)
 scale_Window_by = 5

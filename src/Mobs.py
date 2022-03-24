@@ -1,6 +1,6 @@
 import sys, pygame
 from pygame.locals import *
-from src import functions, animations
+from src import functions, animations, constants
 
 class Mobs:
     def __init__(self, image_path, is_collidable, init_locationxy, display, idle_animation_length_list, moving_animation_length_list, jump_animation_frame_list):
@@ -92,12 +92,12 @@ class Player(Mobs):
         if self.is_movingLeft:
             self.is_moving = True
             self.is_flip = False
-            self.movement[0] -= 1
+            self.movement[0] -= 15
 
         if self.is_movingRight:
             self.is_flip = True
             self.is_moving = True
-            self.movement[0] += 1
+            self.movement[0] += 15
 
         if self.playerdy > 2:
             self.playerdy = 2
@@ -158,38 +158,112 @@ class Player(Mobs):
                 self.is_movingRight = False
 
 
+
+
+
+
 #########################################################################################################################
 
-class Slime(Player):
-    def __init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
-                 moving_animation_length_list, jump_animation_frame_list):
-        Mobs.__init__(self, image_path, is_collidable, init_xy, display, idle_animation_length_list,
-                      moving_animation_length_list, jump_animation_frame_list)
+class Slime:
+    def __init__(self,display, initial_locationxy, base_image_location, hitboxsizexy,
+                 idle_animation_length_list,moving_animation_length_list,jump_animation_frame_list):
+        self.display = display
+        self.position = initial_locationxy
+        self.image_location = base_image_location
+        self.rect = pygame.Rect(self.position[0], self.position[1],hitboxsizexy[0],hitboxsizexy[1])
 
-    def update(self):
+        self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
+
+        self.animate = animations.MobAnimations(base_image_location, idle_animation_length_list, moving_animation_length_list,
+                                                jump_animation_frame_list)
+        self.is_flipA = False
+        self.is_movingA = False
+        self.is_jumpingA = False
+
+        self.movement = [0,0]
+        self.dy = 0
+        self.is_movingL = False
+        self.is_movingR = False
+
+        self.frame = 0
+        self.motion_index = 0
+
+    def load_image(self, scroll):
+        self.display.blit(self.animate.output_current_image(self.is_flipA, self.is_movingA, self.is_jumpingA), (self.rect.x - scroll[0], self.rect.y - scroll[1]))
+
+    def adjust_for_collision(self, tiles):
+        self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
+        self.rect.x += self.movement[0]
+        hit_list = functions.collision_test(self.rect, tiles)
+        for tile in hit_list:
+            if self.movement[0] > 0:
+                self.rect.right = tile.left
+                self.collision_types['right'] = True
+            elif self.movement[0] < 0:
+                self.rect.left = tile.right
+                self.collision_types['left'] = True
+        self.rect.y += self.movement[1]
+        hit_list = functions.collision_test(self.rect, tiles)
+        for tile in hit_list:
+            if self.movement[1] > 0:
+                self.rect.bottom = tile.top
+                self.collision_types['bottom'] = True
+            elif self.movement[1] < 0:
+                self.rect.top = tile.bottom
+                self.collision_types['top'] = True
+
+
+
+    def interval_motion(self):
+        if self.motion_index == 0:
+            self.is_movingL  = False
+            self.is_movingR = False
+        if self.motion_index == 1:
+            self.is_movingL = False
+            self.is_movingR = True
+        if self.motion_index == 2:
+            self.is_movingL = False
+            self.is_movingR = False
+        if self.motion_index == 3:
+            self.is_movingL = True
+            self.is_movingR = False
+
+    def update(self, collide_tiles, scrollxy):
+
+        self.frame += 1
         self.movement = [0, 0]
 
-        if self.is_movingLeft:
-            self.is_moving = True
-            self.is_flip = False
+        if self.is_movingL:
+            self.is_movingA = True
+            self.is_flipA = False
             self.movement[0] -= 1
 
-        if self.is_movingRight:
-            self.is_flip = True
-            self.is_moving = True
+        if self.is_movingR:
+            self.is_flipA = True
+            self.is_movingA = True
             self.movement[0] += 1
 
-        if self.playerdy > 2:
-            self.playerdy = 2
+        if self.dy > 2:
+            self.dy = 2
+        self.movement[1] += self.dy
 
-        if self.is_gravity:
-            self.playerdy += 1
-            self.movement[1] += self.playerdy
+        self.adjust_for_collision(collide_tiles)
+        self.load_image(scrollxy)
 
 
+        if self.collision_types['bottom']:
+            self.dy = 0
+            self.is_jumpingA = False
+        else:
+            self.is_jumpingA = True
 
-        self.location[0] += self.movement[0]
-        self.location[1] += self.movement[1]
 
-        self.adjust_for_collision(self.collidable_tiles)
-        self.load_sprite(self.display)
+        self.is_movingA = False
+        self.dy += 1
+
+        if self.frame % 15 == 0:
+            self.interval_motion()
+            self.motion_index +=1
+        if self.motion_index > 3:
+            self.motion_index = 0
+

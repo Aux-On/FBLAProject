@@ -12,6 +12,7 @@ Mid 4.) Dialogue
 10.) Will Sticky Notes disappear after being interacted with?
 11.) Also double check if my tiles look okay please! And I notice the cave tile used in Level 3?
 12.) Scoreboard AND Leaderboard after every map vs himself?
+13.) Fix the menu
 -------------------------------------------------------------------------------------------------------
 
 Easy - 10-20

@@ -128,3 +128,6 @@ class Level1:
             pygame.display.update()
             self.clock.tick(functions.frames_per_second)
 
+
+
+
