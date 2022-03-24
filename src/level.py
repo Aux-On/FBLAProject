@@ -205,13 +205,50 @@ class Level1(Level):
 
         cloudyvals = functions.rand_list(8*16,16*16,50)
         cloud_idexes = functions.rand_list(0,1,50)
+        r = 0
+        g = 0
+        b = 0
+        isr = False
+        isg = False
+        isb = False
 
         while running:
 
-            self.display.fill((146, 244 , 245))
+            if isr:
+                r+=1
+                if r > 255:
+                    r = 0
+            if isg:
+                g+=1
+                if g > 255:
+                    g = 0
+            if isb:
+                b+=1
+                if b > 255:
+                    b = 0
+
+
+            self.display.fill((r, g , b))
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
+
+
+            for y in range(self.display.get_height()):
+
+                for x in range(self.display.get_width()):
+                    dist = [self.player.Rect.x + 8 - x - self.player.true_scroll[0], self.player.Rect.y - y - self.player.true_scroll[1]]
+                    if math.sqrt((dist[0]*dist[0]) + (dist[1]*dist[1])) < 64:
+                        color = self.display.get_at((x,y))
+                        fc = []
+                        for col in color:
+                            if col+50 > 255:
+                                fc.append(col)
+                            else:
+                                fc.append(col+50)
+
+                        self.display.set_at((x,y), (fc[0], fc[1],fc[2]))
+
 
             if diobox_test:
                 diobox_test = self.dialogue_box("Hello Peter! And Jaffar! You Are in Misery",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
@@ -221,11 +258,24 @@ class Level1(Level):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
+                if event.type == KEYUP:
+                    if event.key == K_r:
+                        isr = False
+                    if event.key == K_g:
+                        isg = False
+                    if event.key == K_b:
+                        isb = False
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         running = False
                     if event.key == K_q:
                         diobox_test = True
+                    if event.key == K_r:
+                        isr = True
+                    if event.key == K_g:
+                        isg = True
+                    if event.key == K_b:
+                        isb = True
                 self.player.check_event(event)
 
             surf = pygame.transform.scale(self.display, constants.WINDOWSIZE)
