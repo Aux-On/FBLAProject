@@ -12,8 +12,8 @@ class Level:
         self.player_image = 'images/level_3/Guyy'
         self.game_map_location = game_map_location
         self.TILESIZE = 16
-        self.small_font = functions.Font('images/gui/small_font.png', (0,0,0))
-        self.large_font = functions.Font('images/gui/large_font.png',(0,0,0))
+        self.small_font = functions.Font('images/gui/small_font.png', (150,100,139))
+        self.large_font = functions.Font('images/gui/large_font.png',(150,100,139))
 
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
@@ -117,20 +117,6 @@ class Level3(Level):
             self.slime.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
             self.slime.update(self.player.collidable_tiles,self.player.scroll)
-            #self.slime1.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime2.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime3.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime5.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime6.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime7.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime8.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime9.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime10.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime11.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime12.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime13.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime14.update(self.player.collidable_tiles, self.player.scroll)
-            #self.slime15.update(self.player.collidable_tiles, self.player.scroll)
 
 
             if diobox_test:
@@ -171,6 +157,8 @@ class Level1(Level):
 
 
         self.player = Mobs.Player(self.player_image,True, [16*8,13*16+1],self.display,[30],[30],[30])
+        self.slime = Mobs.Slime(self.display, [16 * 36, 16*14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
+        self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
 
         self.map_dictionary = {}
         n = 0
@@ -232,6 +220,8 @@ class Level1(Level):
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
+            self.slime.update(self.player.collidable_tiles, self.player.scroll)
+            self.slime2.update(self.player.collidable_tiles, self.player.scroll)
 
 
             for y in range(self.display.get_height()):
@@ -251,7 +241,7 @@ class Level1(Level):
 
 
             if diobox_test:
-                diobox_test = self.dialogue_box("Hello Peter! And Jaffar! You Are in Misery",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                diobox_test = self.dialogue_box("HELLO FBLA",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
@@ -282,3 +272,45 @@ class Level1(Level):
             self.screen.blit(surf, (0, 0))
             pygame.display.update()
             self.clock.tick(constants.game_frames_per_second)
+
+            ########################################################################################################################
+            #                                                    SUB CLASS                                                         #
+            ########################################################################################################################
+class Menu(Level):
+    def __init__(self, clock, display, game_map_location, pygame_tile_image_list):
+        Level.__init__(self, clock, display, game_map_location)
+        # super.__init__(clock,display,game_map_location)
+
+        self.player = Mobs.Player(self.player_image, True, [16 * 8, 13 * 16 + 1], self.display, [30], [30], [30])
+        self.slime = Mobs.Slime(self.display, [16 * 36, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30],
+                                [30])
+        self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30],
+                                 [30], [30])
+
+        self.map_dictionary = {}
+        n = 0
+        for image in pygame_tile_image_list:
+            self.map_dictionary[str(n)] = image
+            # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
+            n += 1
+
+    def loadANDreturn_collidable_tiles(self, colidable_index_list):
+        game_map = functions.read_map(self.game_map_location)
+        # list: [ [3,0,0,...] , [3,0,0,...] , ...]
+        collidable_tiles = []
+
+        y = 0
+        for row in game_map:
+            x = 0
+            for tile_num in row:
+                if tile_num != '3':
+                    self.display.blit(self.map_dictionary[tile_num], (
+                    x * self.TILESIZE - self.player.scroll[0], y * self.TILESIZE - self.player.scroll[1]))
+                if tile_num == '1' or tile_num == '2' or tile_num == '3':
+                    collidable_tiles.append(
+                        pygame.Rect(x * self.TILESIZE, y * self.TILESIZE, self.TILESIZE, self.TILESIZE))
+                x += 1
+
+            y += 1
+
+        return collidable_tiles

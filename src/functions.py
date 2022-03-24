@@ -92,7 +92,8 @@ class Font:
         self.character_order = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.','-',',',':','+','\'','!','?','0','1','2','3','4','5','6','7','8','9','(',')','/','_','=','\\','[',']','*','"','<','>',';']
         font_img = pygame.image.load(path).convert()
         font_img.set_colorkey((0,0,0))
-        #self.fill(font_img,pygame.Color(color))
+        origin_color = font_img.get_at([1,0])
+        self.fill(font_img,origin_color,color)
         current_char_width = 0
         self.characters = {}
         character_count = 0
@@ -107,20 +108,26 @@ class Font:
                 current_char_width += 1
         self.space_width = self.characters['A'].get_width()
 
-    def fill(self, surface, color):
+    def fill(self, surface, origin_color, end_color):
         """Fill all pixels of the surface with color, preserve transparency."""
         w, h = surface.get_size()
-        r, g, b, _ = color
         for x in range(w):
             for y in range(h):
-                a = surface.get_at((x, y))[3]
-                surface.set_at((x, y), pygame.Color(r, g, b, a))
+                a = surface.get_at((x, y))
+                if a == origin_color:
+                    surface.set_at((x, y), end_color)
 
     def render(self, surf, text, loc):
         x_offset = 0
+        type_distx = surf.get_width() - 2*loc[0]
+        y_offset = 0
         for char in text:
+
             if char != ' ':
-                surf.blit(self.characters[char], (loc[0] + x_offset, loc[1]))
+                surf.blit(self.characters[char], (loc[0] + x_offset, loc[1] + y_offset))
                 x_offset += self.characters[char].get_width() + self.spacing
+                if x_offset > type_distx:
+                    y_offset += self.characters[char].get_height() + self.spacing
+                    x_offset = 0
             else:
                 x_offset += self.space_width + self.spacing

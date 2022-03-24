@@ -92,12 +92,12 @@ class Player(Mobs):
         if self.is_movingLeft:
             self.is_moving = True
             self.is_flip = False
-            self.movement[0] -= 15
+            self.movement[0] -= 5
 
         if self.is_movingRight:
             self.is_flip = True
             self.is_moving = True
-            self.movement[0] += 15
+            self.movement[0] += 5
 
         if self.playerdy > 2:
             self.playerdy = 2
@@ -261,7 +261,7 @@ class Slime:
         self.is_movingA = False
         self.dy += 1
 
-        if self.frame % 15 == 0:
+        if self.frame % 90 == 0:
             self.interval_motion()
             self.motion_index +=1
         if self.motion_index > 3:
