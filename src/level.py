@@ -2,6 +2,8 @@ import sys, pygame, math
 
 from src import constants, Mobs, functions
 
+from src import Menu as men
+
 from pygame.locals import *
 
 class Level:
@@ -14,6 +16,7 @@ class Level:
         self.TILESIZE = 16
         self.small_font = functions.Font('images/gui/small_font.png', (150,100,139))
         self.large_font = functions.Font('images/gui/large_font.png',(150,100,139))
+        self.menu = men.Menu(self.clock)
 
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
@@ -110,7 +113,7 @@ class Level3(Level):
 
             self.display.fill((146, 244 , 245))
 
-            functions.generate_clouds(self.display,25,['images/cloud1.png','images/cloud2.png'], cloud_idexes,5,cloudyvals,self.player.scroll)
+            functions.generate_clouds(self.display,50,['images/cloud1.png','images/cloud2.png'], cloud_idexes,1,cloudyvals,[self.player.scroll[0]*.5, self.player.scroll[1]*1.2])
 
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
@@ -120,7 +123,7 @@ class Level3(Level):
 
 
             if diobox_test:
-                diobox_test = self.dialogue_box("Hello Peter! And Jaffar! You Are in Misery",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                diobox_test = self.dialogue_box("FBLA COMPETITION 2004",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
@@ -189,6 +192,7 @@ class Level1(Level):
 
     def game(self):
         diobox_test = False
+        pause = False
         running = True
 
         cloudyvals = functions.rand_list(8*16,16*16,50)
@@ -228,7 +232,7 @@ class Level1(Level):
 
                 for x in range(self.display.get_width()):
                     dist = [self.player.Rect.x + 8 - x - self.player.true_scroll[0], self.player.Rect.y - y - self.player.true_scroll[1]]
-                    if math.sqrt((dist[0]*dist[0]) + (dist[1]*dist[1])) < 64:
+                    if math.sqrt((dist[0]*dist[0]) + (dist[1]*dist[1])) < 32:
                         color = self.display.get_at((x,y))
                         fc = []
                         for col in color:
@@ -237,8 +241,10 @@ class Level1(Level):
                             else:
                                 fc.append(col+50)
 
-                        self.display.set_at((x,y), (fc[0], fc[1],fc[2]))
+                        self.display.set_at((x,y), (fc[0], fc[1],fc[2]))\
 
+            if pause:
+                running = self.menu.pause_return_running(self.display,self.screen)
 
             if diobox_test:
                 diobox_test = self.dialogue_box("HELLO FBLA",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
@@ -257,7 +263,7 @@ class Level1(Level):
                         isb = False
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
-                        running = False
+                        pause = True
                     if event.key == K_q:
                         diobox_test = True
                     if event.key == K_r:
