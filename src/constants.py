@@ -16,12 +16,16 @@ game_index = 0
 #listed as [scrollfactorx,scrollfactory,x,y,xdem,ydem]
 level_3_background = []
 
-levels_as_list = ['main_menu','level_1','level_3']
+levels_as_list = ['main_menu','level_1','level_2','level_3']
 
 
 level3_tile_image_list = [pygame.image.load('images/level_3/map/Dirt1.jpg'),pygame.image.load('images/level_3/map/Grass1.jpg')]
 
 level1_tile_image_list = [pygame.image.load('images/level_1/map/caveeee2.png'),pygame.image.load('images/level_1/map/caveee1.png'), "2", "3"]
 
+level2_tile_image_list = [pygame.image.load('images/level_2/map/snow2.png'),pygame.image.load('images/level_2/map/snow1.png'), "2"]
+
 level3_collidable_indexs = [1,2,3]
+
+level2_collidable_indexs = [1,2]
 
