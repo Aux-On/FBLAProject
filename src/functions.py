@@ -72,16 +72,32 @@ def clip(surf,x,y,x_size,y_size):
 
 def generate_clouds (display, number_of_clouds, cloud_images_list, cloud_index, spacing_factor, image_y_locations, scrollxy):
 
+    n = 0
     for i in range(number_of_clouds):
-        display.blit(pygame.image.load(cloud_images_list[cloud_index[i]]),[i*16*spacing_factor - scrollxy[0],image_y_locations[i]- scrollxy[1]])
+        if i < len(image_y_locations):
+            display.blit(pygame.image.load(cloud_images_list[cloud_index[n]]),[n*16*spacing_factor - scrollxy[0],image_y_locations[n]- scrollxy[1]])
+            n += 1
+        if i >= len(image_y_locations):
+            n = 0
 
 
 
-def rand_list(a,b,number_of_items):
+def rand_list(lowerbound,upperbound,number_of_items):
     lista = []
     for i in range(number_of_items):
-        lista.append(random.randint(a,b))
+        lista.append(random.randint(lowerbound,upperbound))
     return lista
+
+def return_list_Index(list, element):
+    a = 0
+    val_ret = False
+    for i in list:
+        if i == element:
+            val_ret = True
+            return a
+        if not val_ret:
+            if a != a:
+                a += 1
 
 
 
