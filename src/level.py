@@ -1,10 +1,16 @@
 import sys, pygame, math
 
-from src import constants, Mobs, functions
+from src import constants, Mobs, functions, fileManager
 
 from src import Menu as men
 
 from pygame.locals import *
+
+
+
+
+
+
 
 class Level:
     def __init__(self, clock, screen, game_map_location):
@@ -17,6 +23,7 @@ class Level:
         self.small_font = functions.Font('images/gui/small_font.png', (150,100,139))
         self.large_font = functions.Font('images/gui/large_font.png',(150,100,139))
         self.menu = men.Menu(self.clock)
+        self.mob_objects = []
 
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
@@ -163,6 +170,10 @@ class Level1(Level):
         self.player = Mobs.Player(self.player_image,True, [16*8,13*16+1],self.display,[30],[30],[30])
         self.slime = Mobs.Slime(self.display, [16 * 36, 16*14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
         self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
+        self.snake = Mobs.Snakeworm(self.display,[16*22,13*16],'images/level_1/Snakeworm',[16,16],[30,30],[30,30],[30])
+        self.mob_objects.append(self.slime)
+        self.mob_objects.append(self.slime2)
+        self.mob_objects.append(self.snake)
 
         self.map_dictionary = {}
         n = 0
@@ -195,7 +206,10 @@ class Level1(Level):
         diobox_test = False
         pause = False
         running = True
+        self.player = Mobs.Player(self.player_image, True, [16 * 8, 13 * 16 + 1], self.display, [30], [30], [30])
+        collided = False
 
+        self.player.health = 10
         cloudyvals = functions.rand_list(8*16,16*16,50)
         cloud_idexes = functions.rand_list(0,1,50)
         r = 0
@@ -207,14 +221,26 @@ class Level1(Level):
 
         while running:
 
-
-
             self.display.fill((r, g , b))
 
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
-            self.slime.update(self.player.collidable_tiles, self.player.scroll)
-            self.slime2.update(self.player.collidable_tiles, self.player.scroll)
+            # self.slime.update(self.player.collidable_tiles, self.player.scroll)
+            # self.slime2.update(self.player.collidable_tiles, self.player.scroll)
+
+            for mobs in self.mob_objects:
+                mobs.update(self.player.collidable_tiles,self.player.scroll)
+
+
+            for mob in self.mob_objects:
+                if self.player.Rect.colliderect(mob.Rect):
+                    self.player.updatehealth(-1)
+                    self.player.extMove[0] -= -9
+                    self.player.extMove[1] += 6
+
+            if self.player.health == 0:
+                running = self.menu.pause_return_running(self.display, self.screen)
+
 
 
             for y in range(self.display.get_height()):
@@ -253,14 +279,19 @@ class Level1(Level):
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
+
+
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
                 if event.type == KEYUP:
                     if event.key == K_r:
                         isr = False
+                        self.player.updatehealth(-1)
                     if event.key == K_g:
                         isg = False
+                        self.player.updatehealth(+1)
                     if event.key == K_b:
                         isb = False
                 if event.type == KEYDOWN:

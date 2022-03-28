@@ -19,10 +19,23 @@ class Mobs:
         self.is_movingLeft = False
         self.playerdy = 0
 
+        self.health = 10
+
         self.animate = animations.MobAnimations(image_path,idle_animation_length_list,moving_animation_length_list,jump_animation_frame_list)
         self.is_flip = False
         self.is_moving = False
         self.is_jumping = False
+
+    def loadhealth(self, display, locationxy):
+        image = "images/gui/health/health_" + str(self.health) + ".png"
+
+
+        display.blit(pygame.image.load(image),locationxy)
+
+    def updatehealth (self, linear_health_transformation):
+
+        if (self.health+ linear_health_transformation < 11 and self.health+ linear_health_transformation > -1):
+            self.health += linear_health_transformation
 
     def adjust_for_collision(self, tiles):
         self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
@@ -83,8 +96,12 @@ class Player(Mobs):
                       moving_animation_length_list, jump_animation_frame_list)
 
         #super.__init__(image_path, is_collidable, init_xy)
+        self.Rect = pygame.Rect(init_xy[0], init_xy[1], 16, 16)
         self.jump_index = 0
         self.is_gravity = True
+        self.extMove = [0,0]
+
+
 
     def update(self):
         self.movement = [0, 0]
@@ -107,6 +124,10 @@ class Player(Mobs):
             self.movement[1] += self.playerdy
 
 
+        self.loadhealth(self.display,( 125 , 5 ))
+
+        self.movement[0] += self.extMove[0]
+        self.movement[1] += self.extMove[1]
 
         self.location[0] += self.movement[0]
         self.location[1] += self.movement[1]
@@ -129,6 +150,7 @@ class Player(Mobs):
             self.playerdy = 0
 
         self.is_moving = False
+        self.extMove = [0,0]
 
 
     def toggle_platform_gravity(self, is_on):
@@ -170,7 +192,7 @@ class Slime:
         self.display = display
         self.position = initial_locationxy
         self.image_location = base_image_location
-        self.rect = pygame.Rect(self.position[0], self.position[1],hitboxsizexy[0],hitboxsizexy[1])
+        self.Rect = pygame.Rect(self.position[0], self.position[1],hitboxsizexy[0],hitboxsizexy[1])
 
         self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
 
@@ -189,27 +211,27 @@ class Slime:
         self.motion_index = 0
 
     def load_image(self, scroll):
-        self.display.blit(self.animate.output_current_image(self.is_flipA, self.is_movingA, self.is_jumpingA), (self.rect.x - scroll[0], self.rect.y - scroll[1]))
+        self.display.blit(self.animate.output_current_image(self.is_flipA, self.is_movingA, self.is_jumpingA), (self.Rect.x - scroll[0], self.Rect.y - scroll[1]))
 
     def adjust_for_collision(self, tiles):
         self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
-        self.rect.x += self.movement[0]
-        hit_list = functions.collision_test(self.rect, tiles)
+        self.Rect.x += self.movement[0]
+        hit_list = functions.collision_test(self.Rect, tiles)
         for tile in hit_list:
             if self.movement[0] > 0:
-                self.rect.right = tile.left
+                self.Rect.right = tile.left
                 self.collision_types['right'] = True
             elif self.movement[0] < 0:
-                self.rect.left = tile.right
+                self.Rect.left = tile.right
                 self.collision_types['left'] = True
-        self.rect.y += self.movement[1]
-        hit_list = functions.collision_test(self.rect, tiles)
+        self.Rect.y += self.movement[1]
+        hit_list = functions.collision_test(self.Rect, tiles)
         for tile in hit_list:
             if self.movement[1] > 0:
-                self.rect.bottom = tile.top
+                self.Rect.bottom = tile.top
                 self.collision_types['bottom'] = True
             elif self.movement[1] < 0:
-                self.rect.top = tile.bottom
+                self.Rect.top = tile.bottom
                 self.collision_types['top'] = True
 
 
@@ -267,3 +289,63 @@ class Slime:
         if self.motion_index > 3:
             self.motion_index = 0
 
+class Snakeworm(Slime):
+    def __init__(self,display, initial_locationxy, base_image_location, hitboxsizexy,
+                 idle_animation_length_list,moving_animation_length_list,jump_animation_frame_list):
+        Slime.__init__(self,display, initial_locationxy, base_image_location, hitboxsizexy,
+                 idle_animation_length_list,moving_animation_length_list,jump_animation_frame_list)
+
+    def interval_motion(self):
+        if self.motion_index == 0:
+            self.is_movingL  = False
+            self.is_movingR = False
+        if self.motion_index == 1:
+            self.is_movingL = False
+            self.is_movingR = True
+        if self.motion_index == 2:
+            self.is_movingL = True
+            self.is_movingR = False
+        if self.motion_index == 3:
+            self.is_movingL = False
+            self.is_movingR = True
+
+    def update(self, collide_tiles, scrollxy):
+
+        self.frame += 1
+        self.movement = [0, 0]
+
+        if self.collision_types['left'] or self.collision_types['right']:
+            self.dy = -4
+
+        if self.is_movingL:
+            self.is_movingA = True
+            self.is_flipA = False
+            self.movement[0] -= 1
+
+        if self.is_movingR:
+            self.is_flipA = True
+            self.is_movingA = True
+            self.movement[0] += 1
+
+        if self.dy > 2:
+            self.dy = 2
+        self.movement[1] += self.dy
+
+        self.adjust_for_collision(collide_tiles)
+        self.load_image(scrollxy)
+
+        if self.collision_types['bottom']:
+            self.dy = 0
+            self.is_jumpingA = False
+        else:
+            self.is_jumpingA = True
+
+
+        self.is_movingA = False
+        self.dy += 1
+
+        if self.frame % 30 == 0:
+            self.interval_motion()
+            self.motion_index +=1
+        if self.motion_index > 3:
+            self.motion_index = 0

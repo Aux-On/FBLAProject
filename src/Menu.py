@@ -27,6 +27,7 @@ class Menu:
     #
     #         button_1 = pygame.Rect(location_b1[0], location_b1[1], self.buttonInitImg.get_width(), self.buttonInitImg.get_height())
     #         self.surface.blit(self.buttonInitImg,location_b1)
+    #         self.surface.blit(self.buttonInitImg,location_b1)
     #
     #         if button_1.collidepoint(mx,my):
     #             self.surface.blit(self.buttonFinalImg, location_b1)
@@ -74,6 +75,8 @@ class Menu:
                 if click == True:
                     running = False
                     #constants.game_index = (functions.return_list_Index(constants.levels_as_list,'level_3')-1)
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.unload()
                     if game_index_current == constants.game_index:
                         print("src/functions Line 75: Element not within list")
                     return False

@@ -53,6 +53,8 @@ while True:
             pygame.mixer.music.play(-1)
             click = False
             level1.game()
+            pygame.mixer.music.load("sounds/music/WS-Calm-flat-_1.wav")
+            pygame.mixer.music.play(-1)
     else:
         menu_image.blit(button1_image,adjusted_button_location)
 
