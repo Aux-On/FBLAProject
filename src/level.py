@@ -122,6 +122,7 @@ class Level3(Level):
             self.slime.update(self.player.collidable_tiles,self.player.scroll)
 
 
+
             if diobox_test:
                 diobox_test = self.dialogue_box("FBLA COMPETITION 2004",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                 self.player.is_movingRight = False
@@ -206,18 +207,6 @@ class Level1(Level):
 
         while running:
 
-            if isr:
-                r+=1
-                if r > 255:
-                    r = 0
-            if isg:
-                g+=1
-                if g > 255:
-                    g = 0
-            if isb:
-                b+=1
-                if b > 255:
-                    b = 0
 
 
             self.display.fill((r, g , b))
@@ -241,7 +230,20 @@ class Level1(Level):
                             else:
                                 fc.append(col+50)
 
-                        self.display.set_at((x,y), (fc[0], fc[1],fc[2]))\
+                        self.display.set_at((x,y), (fc[0], fc[1],fc[2]))
+
+            for y in range(self.display.get_height()):
+
+                for x in range(self.display.get_width()):
+                    color = self.display.get_at((x, y))
+                    fc = []
+                    for col in color:
+                        if col - 50 < 0:
+                            fc.append(50)
+                        else:
+                            fc.append(col - 50)
+
+                    self.display.set_at((x, y), (fc[0], fc[1], fc[2]))
 
             if pause:
                 running = self.menu.pause_return_running(self.display,self.screen)

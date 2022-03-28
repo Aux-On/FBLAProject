@@ -8,10 +8,10 @@ from src import constants, functions
 class Menu:
 
     def __init__(self, clock):
-            #self.surface = surface
-        #self.background_img = background_img
-        #self.buttonInitImg = buttonInitImg
-        #self.buttonFinalImg = buttonFinalImg
+        # self.surface = surface
+        # self.background_img = background_img
+        # self.buttonInitImg = buttonInitImg
+        # self.buttonFinalImg = buttonFinalImg
         self.clock = clock
 
     # def main_menu(self, location_b1, location_b2):
@@ -73,7 +73,7 @@ class Menu:
             if button_1.collidepoint(mx,my):
                 if click == True:
                     running = False
-                    constants.game_index = (functions.return_list_Index(constants.levels_as_list,'level_3')-1)
+                    #constants.game_index = (functions.return_list_Index(constants.levels_as_list,'level_3')-1)
                     if game_index_current == constants.game_index:
                         print("src/functions Line 75: Element not within list")
                     return False
