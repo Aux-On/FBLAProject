@@ -22,12 +22,12 @@ menu_image = pygame.image.load("images/Menuu.png")
 
 click = False
 
-surface_scale_factor = [constants.WINDOWSIZE[0]/constants.surface_size[0],constants.WINDOWSIZE[1]/constants.surface_size[1]]
-
-
+#music
 pygame.mixer.music.load("sounds/music/Victor.mp3")
 pygame.mixer.music.play(-1)
 
+
+game_index = "Level_1"
 
 while True:
     display.fill((menu_image.get_at((1,1))[0],menu_image.get_at((1,1))[1],menu_image.get_at((1,1))[2]))
@@ -37,18 +37,29 @@ while True:
     mx = mx/5
     my = my/5
 
-    print((mx,my))
+    #print((mx,my))
 
     button1_rect = pygame.rect.Rect(75,58,25,9)
     if button1_rect.collidepoint(mx,my):
         display.blit(pygame.image.load("images/playy.png"), [75,58])
         if click:
+            click = False
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
-            pygame.mixer.music.load("sounds/music/McAfee.mp3")
-            pygame.mixer.music.play(-1)
-            click = False
-            level1.game()
+
+            if game_index == "Level_1":
+                ##Level 1 MUSIC
+                pygame.mixer.music.load("sounds/music/McAfee.mp3")
+                pygame.mixer.music.play(-1)
+                game_index = level1.game()
+                # Reloading menu music
+                pygame.mixer.music.load("sounds/music/Victor.mp3")
+                pygame.mixer.music.play(-1)
+            if game_index == "Level_2":
+                pygame.mixer.music.stop()
+                pygame.mixer.music.unload()
+                #game_index = level2.game()
+            #Reloading menu music
             pygame.mixer.music.load("sounds/music/Victor.mp3")
             pygame.mixer.music.play(-1)
 
@@ -61,9 +72,9 @@ while True:
     if button3_rect.collidepoint(mx, my):
         display.blit(pygame.image.load("images/leaderboard.png"), [52, 86])
 
-    button3_rect = pygame.rect.Rect(76, 101, pygame.image.load("images/exit.png").get_width(),
+    button4_rect = pygame.rect.Rect(76, 101, pygame.image.load("images/exit.png").get_width(),
                                     pygame.image.load("images/exit.png").get_height())
-    if button3_rect.collidepoint(mx, my):
+    if button4_rect.collidepoint(mx, my):
         display.blit(pygame.image.load("images/exit.png"), [76, 101])
         if click:
             sys.exit()

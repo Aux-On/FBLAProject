@@ -21,7 +21,7 @@ levels_as_list = ['main_menu','level_1','level_2','level_3']
 
 level3_tile_image_list = [pygame.image.load('images/level_3/map/Dirt1.jpg'),pygame.image.load('images/level_3/map/Grass1.jpg')]
 
-level1_tile_image_list = [pygame.image.load('images/level_1/map/caveeee2.png'),pygame.image.load('images/level_1/map/caveee1.png'), "2", "3"]
+level1_tile_image_list = [pygame.image.load('images/level_1/map/caveeee2.png'),pygame.image.load('images/level_1/map/caveee1.png'), "2", "3" ]
 
 level2_tile_image_list = [pygame.image.load('images/snow2.png'),pygame.image.load('images/snow1.png'), "2"]
 

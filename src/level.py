@@ -1,3 +1,4 @@
+import random
 import sys, pygame, math
 
 from src import constants, Mobs, functions, fileManager
@@ -11,7 +12,7 @@ from pygame.locals import *
 
 
 
-
+#Base Level Class
 class Level:
     def __init__(self, clock, screen, game_map_location):
         self.clock = clock
@@ -57,6 +58,8 @@ class Level:
             self.screen.blit(surf, (0, 0))
             pygame.display.update()
             self.clock.tick(constants.game_frames_per_second)
+
+
 
 ########################################################################################################################
 #                                                    SUB CLASS
@@ -104,8 +107,10 @@ class Level3(Level):
         for row in game_map:
             x = 0
             for tile_num in row:
+                #not include"filer" blocks
                 if tile_num != '0' and tile_num != '3':
                     self.display.blit(self.map_dictionary[tile_num], (x*self.TILESIZE - self.player.scroll[0],y*self.TILESIZE - self.player.scroll[1]))
+                #Collidable blocks
                 if tile_num == '1' or tile_num == '2' or tile_num == '3':
                     collidable_tiles.append(pygame.Rect(x * self.TILESIZE,y * self.TILESIZE,self.TILESIZE,self.TILESIZE))
                 x += 1
@@ -180,6 +185,7 @@ class Level1(Level):
 
         self.note_1 = Mobs.Stickyfingers(self.display,[16* 16, 17 *16],"images/stickyfingers.png")
 
+
         self.mob_objects.append(self.slime)
         self.mob_objects.append(self.slime2)
         self.mob_objects.append(self.snake)
@@ -215,7 +221,10 @@ class Level1(Level):
     def game(self):
         diobox_test = False
         pause = False
+
+        #RUNNING
         running = True
+
         self.player = Mobs.Player(self.player_image, True, [16 * 9, 16 * 16 + 1], self.display, [30], [30], [30])
         collided = False
 
@@ -232,7 +241,7 @@ class Level1(Level):
         score = 0
         is_E_pressed = False
 
-        self.dialogue_box("WH.. WHERE AM I..?" + "I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
+        self.dialogue_box("WH.. WHERE AM I..? I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
         self.dialogue_box("ITS dARK HERE... I MISS MY FRIENDS A-ND Family...?", [10, 10], K_w)
         self.dialogue_box("I SEE A LIGHT... MAYBE I SHOULD FOLLOW IT?", [10, 10], K_w)
         self.dialogue_box("IS THIS.. IS THIS A CAVE?", [10, 10], K_w)
@@ -273,6 +282,7 @@ class Level1(Level):
                             self.player.extMove[0] += 15
                             self.player.extMove[1] += -10
                         else:
+                            self.player.extMove[0] += (random.randint(-1,1)*15)
                             self.player.extMove[1] += -10
 
 
@@ -293,7 +303,7 @@ class Level1(Level):
                 running = self.menu.game_over(self.display,self.screen)
 
 
-
+            ##LIGHT
             for y in range(self.display.get_height()):
 
                 for x in range(self.display.get_width()):
@@ -308,7 +318,7 @@ class Level1(Level):
                                 fc.append(col+50)
 
                         self.display.set_at((x,y), (fc[0], fc[1],fc[2]))
-
+            ##DIMS EVERYTHING ELSE
             for y in range(self.display.get_height()):
 
                 for x in range(self.display.get_width()):
@@ -338,6 +348,7 @@ class Level1(Level):
                 self.display.blit(pygame.image.load("images/gui/progress bar/progress_3.png"),[0,-10])
             if progress == 3:
                 self.display.blit(pygame.image.load("images/gui/progress bar/progress_4.png"), [0,-10])
+                running = False
 
             self.load_score(score, [4, 4])
 
@@ -347,8 +358,13 @@ class Level1(Level):
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
+
             if not running:
                 self.display.fill((0, 0, 0))
+                if progress == 3:
+                    return "Level_2"
+                else:
+                    return "Level_1"
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -356,10 +372,8 @@ class Level1(Level):
                 if event.type == KEYUP:
                     if event.key == K_r:
                         isr = False
-                        self.player.updatehealth(-1)
                     if event.key == K_g:
                         isg = False
-                        self.player.updatehealth(+1)
                     if event.key == K_b:
                         isb = False
                     if event.key == K_w:
