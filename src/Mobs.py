@@ -349,3 +349,4 @@ class Snakeworm(Slime):
             self.motion_index +=1
         if self.motion_index > 3:
             self.motion_index = 0
+
