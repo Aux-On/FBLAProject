@@ -25,7 +25,7 @@ click = False
 surface_scale_factor = [constants.WINDOWSIZE[0]/constants.surface_size[0],constants.WINDOWSIZE[1]/constants.surface_size[1]]
 
 
-pygame.mixer.music.load("sounds/music/WS-Calm-flat-_1.wav")
+pygame.mixer.music.load("sounds/music/Victor.mp3")
 pygame.mixer.music.play(-1)
 
 
@@ -45,11 +45,11 @@ while True:
         if click:
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
-            pygame.mixer.music.load("sounds/music/Torn_1.wav")
+            pygame.mixer.music.load("sounds/music/McAfee.mp3")
             pygame.mixer.music.play(-1)
             click = False
             level1.game()
-            pygame.mixer.music.load("sounds/music/WS-Calm-flat-_1.wav")
+            pygame.mixer.music.load("sounds/music/Victor.mp3")
             pygame.mixer.music.play(-1)
 
     button2_rect = pygame.rect.Rect(74,73,pygame.image.load("images/Intro.png").get_width(),pygame.image.load("images/Intro.png").get_height())
