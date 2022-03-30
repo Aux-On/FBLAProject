@@ -152,9 +152,6 @@ class Level3(Level):
 
 
 
-
-
-
 ########################################################################################################################
 #                                                    SUB CLASS
 ########################################################################################################################
@@ -174,6 +171,7 @@ class Level1(Level):
         self.mob_objects.append(self.slime)
         self.mob_objects.append(self.slime2)
         self.mob_objects.append(self.snake)
+        #self mob makes mob able to be interacted
 
         self.map_dictionary = {}
         n = 0
@@ -350,6 +348,7 @@ class Menu(Level):
                 if tile_num != '3':
                     self.display.blit(self.map_dictionary[tile_num], (
                     x * self.TILESIZE - self.player.scroll[0], y * self.TILESIZE - self.player.scroll[1]))
+                    #move screen here with player
                 if tile_num == '1' or tile_num == '2' or tile_num == '3':
                     collidable_tiles.append(
                         pygame.Rect(x * self.TILESIZE, y * self.TILESIZE, self.TILESIZE, self.TILESIZE))
