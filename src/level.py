@@ -220,7 +220,7 @@ class Level1(Level):
         isb = False
 
         self.dialogue_box("WH.. WHERE AM I..?" + "I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
-        self.dialogue_box("ITS dARK HERE... I MISS MY FRIENDS A-ND Family...", [10, 10], K_w)
+        self.dialogue_box("ITS dARK HERE... I MISS MY FRIENDS A-ND Family...?", [10, 10], K_w)
         self.dialogue_box("I SEE A LIGHT... MAYBE I SHOULD FOLLOW IT?", [10, 10], K_w)
         self.dialogue_box("IS THIS.. IS THIS A CAVE?", [10, 10], K_w)
 
