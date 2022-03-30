@@ -28,7 +28,7 @@ class Level:
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
         box = pygame.image.load("images/gui/text_box.png")
-        dialouge_surf.set_colorkey((0,0,0))
+        #dialouge_surf.set_colorkey((0,0,0))
 
         running = True
         while running:
@@ -219,6 +219,11 @@ class Level1(Level):
         isg = False
         isb = False
 
+        self.dialogue_box("WH.. WHERE AM I..?" + "I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
+        self.dialogue_box("ITS dARK HERE... I MISS MY FRIENDS A-ND Family...", [10, 10], K_w)
+        self.dialogue_box("I SEE A LIGHT... MAYBE I SHOULD FOLLOW IT?", [10, 10], K_w)
+        self.dialogue_box("IS THIS.. IS THIS A CAVE?", [10, 10], K_w)
+
         while running:
 
             self.display.fill((r, g , b))
@@ -239,7 +244,7 @@ class Level1(Level):
                     self.player.extMove[1] += 6
 
             if self.player.health == 0:
-                running = self.menu.pause_return_running(self.display, self.screen)
+                running = self.menu.game_over(self.display,self.screen)
 
 
 
@@ -279,8 +284,8 @@ class Level1(Level):
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
-
-
+            if not running:
+                self.display.fill((0, 0, 0))
 
             for event in pygame.event.get():
                 if event.type == QUIT:

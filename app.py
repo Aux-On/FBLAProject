@@ -39,8 +39,9 @@ while True:
 
     print((mx,my))
 
-    button_rect = pygame.rect.Rect(0,0,16,16)
-    if button_rect.collidepoint(mx,my):
+    button1_rect = pygame.rect.Rect(75,58,25,9)
+    if button1_rect.collidepoint(mx,my):
+        display.blit(pygame.image.load("images/playy.png"), [75,58])
         if click:
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
@@ -50,6 +51,23 @@ while True:
             level1.game()
             pygame.mixer.music.load("sounds/music/WS-Calm-flat-_1.wav")
             pygame.mixer.music.play(-1)
+
+    button2_rect = pygame.rect.Rect(74,73,pygame.image.load("images/Intro.png").get_width(),pygame.image.load("images/Intro.png").get_height())
+    if button2_rect.collidepoint(mx,my):
+        display.blit(pygame.image.load("images/Intro.png"), [73,72])
+
+    button3_rect = pygame.rect.Rect(52, 86, pygame.image.load("images/leaderboard.png").get_width(),
+                                    pygame.image.load("images/leaderboard.png").get_height())
+    if button3_rect.collidepoint(mx, my):
+        display.blit(pygame.image.load("images/leaderboard.png"), [52, 86])
+
+    button3_rect = pygame.rect.Rect(76, 101, pygame.image.load("images/exit.png").get_width(),
+                                    pygame.image.load("images/exit.png").get_height())
+    if button3_rect.collidepoint(mx, my):
+        display.blit(pygame.image.load("images/exit.png"), [76, 101])
+        if click:
+            sys.exit()
+
 
 
 
