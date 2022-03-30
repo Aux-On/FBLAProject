@@ -350,3 +350,38 @@ class Snakeworm(Slime):
         if self.motion_index > 3:
             self.motion_index = 0
 
+
+
+class Stickyfingers(Slime):
+    def __init__(self,display, initial_locationxy, base_image_location):
+        Slime.__init__(self,display, initial_locationxy, 'images/level_3/Slime', [16,16],
+                 [1],[1],[1])
+
+        self.image_location2 = base_image_location
+
+
+
+    def load_image(self, scroll):
+        self.display.blit(pygame.image.load(self.image_location2), (self.Rect.x - scroll[0], self.Rect.y - scroll[1]))
+
+
+    def update(self, collide_tiles, scrollxy):
+
+        self.frame += 1
+        self.movement = [0, 0]
+
+        if self.collision_types['left'] or self.collision_types['right']:
+            self.dy = -4
+
+
+        if self.dy > 2:
+            self.dy = 2
+        self.movement[1] += self.dy
+
+        self.adjust_for_collision(collide_tiles)
+        self.load_image(scrollxy)
+
+        if self.collision_types['bottom']:
+            self.dy = 0
+            self.is_jumpingA = False
+
