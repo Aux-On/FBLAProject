@@ -167,7 +167,7 @@ class Level1(Level):
         #super.__init__(clock,display,game_map_location)
 
 
-        self.player = Mobs.Player(self.player_image,True, [16*8,13*16+1],self.display,[30],[30],[30])
+        self.player = Mobs.Player(self.player_image,True, [16*9,16*16+1],self.display,[30],[30],[30])
         self.slime = Mobs.Slime(self.display, [16 * 36, 16*14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
         self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
         self.snake = Mobs.Snakeworm(self.display,[16*22,13*16],'images/level_1/Snakeworm',[16,16],[30,30],[30,30],[30])
@@ -206,7 +206,7 @@ class Level1(Level):
         diobox_test = False
         pause = False
         running = True
-        self.player = Mobs.Player(self.player_image, True, [16 * 8, 13 * 16 + 1], self.display, [30], [30], [30])
+        self.player = Mobs.Player(self.player_image, True, [16 * 9, 16 * 16 + 1], self.display, [30], [30], [30])
         collided = False
 
         self.player.health = 10
