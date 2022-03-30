@@ -28,6 +28,8 @@ class Level:
         self.notes = []
 
     def load_score(self,score, locationxy):
+        self.blank.fill((0,0,0))
+        self.blank.set_colorkey((0,0,0))
         self.small_font.render(self.blank, "score: " + str(score), (0, 0))
         self.display.blit(self.blank, locationxy)
 
@@ -285,7 +287,7 @@ class Level1(Level):
                         self.notes.remove(note)
                         self.dialogue_box("NOTE: Keep up the Good WorK! Your Luck's bound to turn around!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                         progress += 1
-                        score += 10
+                        score += 20
 
             if self.player.health == 0:
                 running = self.menu.game_over(self.display,self.screen)
