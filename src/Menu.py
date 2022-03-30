@@ -113,5 +113,44 @@ class Menu:
 
 
 
+    def game_over(self, display, screen):
+
+        running = True
+        frames_ran = 0
+        click = False
+
+
+        while running:
+            display.fill((0,0,0))
+
+            display.blit(pygame.image.load("images/menus/game_over.png"),[0,0])
+
+            mx,my = pygame.mouse.get_pos()
+            mx = mx/5
+            my = my/5
+            print(mx,my)
+
+            menu_rect = pygame.rect.Rect(47,88,pygame.image.load("images/menus/game_over_main_menu_screen.png").get_width(),pygame.image.load("images/menus/game_over_main_menu_screen.png").get_height())
+
+            if menu_rect.collidepoint(mx,my):
+                display.blit(pygame.image.load("images/menus/game_over_main_menu_screen.png"), [menu_rect.x, menu_rect.y])
+                if click:
+                    running = False
+                    return False
+
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+
+
+            surf = pygame.transform.scale(display, constants.WINDOWSIZE)
+            screen.blit(surf, (0, 0))
+            pygame.display.update()
+            self.clock.tick(constants.game_frames_per_second)
+
 
 
