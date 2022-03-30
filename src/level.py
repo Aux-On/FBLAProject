@@ -152,6 +152,9 @@ class Level3(Level):
 
 
 
+
+
+
 ########################################################################################################################
 #                                                    SUB CLASS
 ########################################################################################################################
@@ -164,14 +167,13 @@ class Level1(Level):
         #super.__init__(clock,display,game_map_location)
 
 
-        self.player = Mobs.Player(self.player_image,True, [16*8,13*16+1],self.display,[30],[30],[30])
+        self.player = Mobs.Player(self.player_image,True, [16*9,16*16+1],self.display,[30],[30],[30])
         self.slime = Mobs.Slime(self.display, [16 * 36, 16*14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
         self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30], [30])
         self.snake = Mobs.Snakeworm(self.display,[16*22,13*16],'images/level_1/Snakeworm',[16,16],[30,30],[30,30],[30])
         self.mob_objects.append(self.slime)
         self.mob_objects.append(self.slime2)
         self.mob_objects.append(self.snake)
-        #self mob makes mob able to be interacted
 
         self.map_dictionary = {}
         n = 0
@@ -204,7 +206,7 @@ class Level1(Level):
         diobox_test = False
         pause = False
         running = True
-        self.player = Mobs.Player(self.player_image, True, [16 * 8, 13 * 16 + 1], self.display, [30], [30], [30])
+        self.player = Mobs.Player(self.player_image, True, [16 * 9, 16 * 16 + 1], self.display, [30], [30], [30])
         collided = False
 
         self.player.health = 10
@@ -318,42 +320,3 @@ class Level1(Level):
             ########################################################################################################################
             #                                                    SUB CLASS                                                         #
             ########################################################################################################################
-class Menu(Level):
-    def __init__(self, clock, display, game_map_location, pygame_tile_image_list):
-        Level.__init__(self, clock, display, game_map_location)
-        # super.__init__(clock,display,game_map_location)
-
-        self.player = Mobs.Player(self.player_image, True, [16 * 8, 13 * 16 + 1], self.display, [30], [30], [30])
-        self.slime = Mobs.Slime(self.display, [16 * 36, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30], [30],
-                                [30])
-        self.slime2 = Mobs.Slime(self.display, [16 * 100, 16 * 14 - 2], 'images/level_3/Slime', [16, 16], [30, 30],
-                                 [30], [30])
-
-        self.map_dictionary = {}
-        n = 0
-        for image in pygame_tile_image_list:
-            self.map_dictionary[str(n)] = image
-            # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
-            n += 1
-
-    def loadANDreturn_collidable_tiles(self, colidable_index_list):
-        game_map = functions.read_map(self.game_map_location)
-        # list: [ [3,0,0,...] , [3,0,0,...] , ...]
-        collidable_tiles = []
-
-        y = 0
-        for row in game_map:
-            x = 0
-            for tile_num in row:
-                if tile_num != '3':
-                    self.display.blit(self.map_dictionary[tile_num], (
-                    x * self.TILESIZE - self.player.scroll[0], y * self.TILESIZE - self.player.scroll[1]))
-                    #move screen here with player
-                if tile_num == '1' or tile_num == '2' or tile_num == '3':
-                    collidable_tiles.append(
-                        pygame.Rect(x * self.TILESIZE, y * self.TILESIZE, self.TILESIZE, self.TILESIZE))
-                x += 1
-
-            y += 1
-
-        return collidable_tiles

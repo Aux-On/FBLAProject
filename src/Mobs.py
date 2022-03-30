@@ -109,12 +109,12 @@ class Player(Mobs):
         if self.is_movingLeft:
             self.is_moving = True
             self.is_flip = False
-            self.movement[0] -= 5
+            self.movement[0] -= 3
 
         if self.is_movingRight:
             self.is_flip = True
             self.is_moving = True
-            self.movement[0] += 5
+            self.movement[0] += 3
 
         if self.playerdy > 2:
             self.playerdy = 2
@@ -167,7 +167,7 @@ class Player(Mobs):
                 if self.jump_index == 1:
                     self.playerdy = -8
                 if self.jump_index == 2:
-                    self.playerdy = -6
+                    self.playerdy = -8
 
             if event.key == K_LEFT:
                 self.is_movingLeft = True
@@ -349,3 +349,4 @@ class Snakeworm(Slime):
             self.motion_index +=1
         if self.motion_index > 3:
             self.motion_index = 0
+
