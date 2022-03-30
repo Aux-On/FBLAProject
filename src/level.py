@@ -22,9 +22,15 @@ class Level:
         self.TILESIZE = 16
         self.small_font = functions.Font('images/gui/small_font.png', (150,100,139))
         self.large_font = functions.Font('images/gui/large_font.png',(150,100,139))
+        self.blank = pygame.image.load("images/blank_screen.png")
         self.menu = men.Menu(self.clock)
         self.mob_objects = []
         self.notes = []
+
+    def load_score(self,score, locationxy):
+        self.small_font.render(self.blank, "score: " + str(score), (0, 0))
+        self.display.blit(self.blank, locationxy)
+
 
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
@@ -33,6 +39,7 @@ class Level:
 
         running = True
         while running:
+            self.display.blit(pygame.image.load("images/press_w.png"),[0,0])
             self.small_font.render(dialouge_surf,text,(10,6))
             self.display.blit(dialouge_surf,locationxy)
             #dialouge_surf.blit(pygame.transform.scale(box, sizexy), (0, 0))
@@ -220,6 +227,7 @@ class Level1(Level):
         isg = False
         isb = False
         progress = 0
+        score = 0
         is_E_pressed = False
 
         self.dialogue_box("WH.. WHERE AM I..?" + "I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
@@ -243,9 +251,28 @@ class Level1(Level):
 
             for mob in self.mob_objects:
                 if self.player.Rect.colliderect(mob.Rect):
-                    self.player.updatehealth(-1)
-                    self.player.extMove[0] -= -9
-                    self.player.extMove[1] += -6
+                    if self.player.is_movingLeft:
+                        self.player.is_movingLeft = False
+                        self.player.updatehealth(-1)
+                        self.player.extMove[0] += 15
+                        self.player.extMove[1] += -10
+                    elif self.player.is_movingRight:
+                        self.player.is_movingRight = False
+                        self.player.updatehealth(-1)
+                        self.player.extMove[0] += -15
+                        self.player.extMove[1] += -10
+                    else:
+                        if mob.is_movingL:
+                            self.player.updatehealth(-1)
+                            self.player.extMove[0] += -15
+                            self.player.extMove[1] += -10
+                        elif mob.is_movingR:
+                            self.player.updatehealth(-1)
+                            self.player.extMove[0] += 15
+                            self.player.extMove[1] += -10
+                        else:
+                            self.player.extMove[1] += -10
+
 
             for note in self.notes:
                 note.update(self.player.collidable_tiles,self.player.scroll)
@@ -258,6 +285,7 @@ class Level1(Level):
                         self.notes.remove(note)
                         self.dialogue_box("NOTE: Keep up the Good WorK! Your Luck's bound to turn around!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
                         progress += 1
+                        score += 10
 
             if self.player.health == 0:
                 running = self.menu.game_over(self.display,self.screen)
@@ -295,16 +323,21 @@ class Level1(Level):
 
 
             if pause:
-                running = self.menu.game_over(self.display,self.screen)
+                running = self.menu.pause(self.display,self.screen)
+                pause = False
+                self.player.is_movingLeft = False
+                self.player.is_movingRight = False
 
             if progress == 0:
-                self.display.blit(pygame.image.load("images/gui/progress bar/progress_1.png"),[0,0])
+                self.display.blit(pygame.image.load("images/gui/progress bar/progress_1.png"),[0,-10])
             if progress == 1:
-                self.display.blit(pygame.image.load("images/gui/progress bar/progress_2.png"),[0,0])
+                self.display.blit(pygame.image.load("images/gui/progress bar/progress_2.png"),[0,-10])
             if progress == 2:
-                self.display.blit(pygame.image.load("images/gui/progress bar/progress_3.png"),[0,0])
+                self.display.blit(pygame.image.load("images/gui/progress bar/progress_3.png"),[0,-10])
             if progress == 3:
-                self.display.blit(pygame.image.load("images/gui/progress bar/progress_4.png"), [0, 0])
+                self.display.blit(pygame.image.load("images/gui/progress bar/progress_4.png"), [0,-10])
+
+            self.load_score(score, [4, 4])
 
 
             if diobox_test:

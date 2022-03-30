@@ -58,58 +58,7 @@ class Menu:
     #         pygame.display.update()
     #         self.clock.tick(30)
 
-    def pause_return_running(self, display, screen):
-        game_index_current = constants.game_index
-        running = True
-        click = False
-        frames_ran = 0
-        while running:
 
-            mx, my = pygame.mouse.get_pos()
-
-            button_1 = pygame.Rect(constants.WINDOWSIZE[0]/4,constants.WINDOWSIZE[1]/4,constants.WINDOWSIZE[0]/4,constants.WINDOWSIZE[1]/4)
-            pygame.draw.rect(display, (100, 95, 124), button_1)
-
-
-            if button_1.collidepoint(mx,my):
-                if click == True:
-                    running = False
-                    #constants.game_index = (functions.return_list_Index(constants.levels_as_list,'level_3')-1)
-                    pygame.mixer.music.stop()
-                    pygame.mixer.music.unload()
-                    if game_index_current == constants.game_index:
-                        print("src/functions Line 75: Element not within list")
-                    return False
-
-            if frames_ran == 0:
-
-                for y in range(display.get_height()):
-
-                    for x in range(display.get_width()):
-                        color = display.get_at((x,y))
-                        fc = []
-                        for col in color:
-                            if col-50 < 0:
-                                fc.append(50)
-                            else:
-                                fc.append(col-50)
-
-                        display.set_at((x,y), (fc[0], fc[1],fc[2]))
-
-
-
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    sys.exit()
-                if event.type == MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        click = True
-
-            frames_ran += 1
-            surf = pygame.transform.scale(display, constants.WINDOWSIZE)
-            screen.blit(surf, (0, 0))
-            pygame.display.update()
-            self.clock.tick(constants.game_frames_per_second)
 
 
 
@@ -152,5 +101,61 @@ class Menu:
             pygame.display.update()
             self.clock.tick(constants.game_frames_per_second)
 
+    def pause(self, display,screen):
+        running = True
+        frames_ran = 0
+        click = False
+
+        while running:
+            display.fill((0, 0, 0))
+
+            display.blit(pygame.image.load("images/paused.png"), [0, 0])
+
+            mx, my = pygame.mouse.get_pos()
+            mx = mx / 5
+            my = my / 5
+            print(mx, my)
+
+            menu_rect = pygame.rect.Rect(54, 68,
+                                         pygame.image.load("images/mainmenupause.png").get_width(),
+                                         pygame.image.load("images/mainmenupause.png").get_height())
+            if menu_rect.collidepoint(mx, my):
+                display.blit(pygame.image.load("images/mainmenupause.png"),[menu_rect.x, menu_rect.y])
+                if click:
+                    running = False
+                    return False
+
+            exit_rect = pygame.rect.Rect(78, 85,
+                                         pygame.image.load("images/quitmenupause.png").get_width(),
+                                         pygame.image.load("images/quitmenupause.png").get_height())
+            if exit_rect.collidepoint(mx, my):
+                display.blit(pygame.image.load("images/quitmenupause.png"),[exit_rect.x,exit_rect.y])
+                if click:
+                    running = False
+                    sys.exit()
+
+            cont_rect = pygame.rect.Rect(57, 51,
+                                         pygame.image.load("images/Continuepause.png").get_width(),
+                                         pygame.image.load("images/Continuepause.png").get_height())
+            if cont_rect.collidepoint(mx, my):
+                display.blit(pygame.image.load("images/Continuepause.png"), [cont_rect.x, cont_rect.y])
+                if click:
+                    running = False
+                    return True
+
+
+
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+
+            surf = pygame.transform.scale(display, constants.WINDOWSIZE)
+            screen.blit(surf, (0, 0))
+            pygame.display.update()
+            self.clock.tick(constants.game_frames_per_second)
 
 
