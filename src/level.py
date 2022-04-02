@@ -13,6 +13,7 @@ from pygame.locals import *
 
 
 #Base Level Class
+#copy and paste this for the basic set up for level 2
 class Level:
     def __init__(self, clock, screen, game_map_location):
         self.clock = clock
@@ -28,13 +29,14 @@ class Level:
         self.mob_objects = []
         self.notes = []
 
+#does this refer to the transparent notes?
     def load_score(self,score, locationxy):
         self.blank.fill((0,0,0))
         self.blank.set_colorkey((0,0,0))
         self.small_font.render(self.blank, "score: " + str(score), (0, 0))
         self.display.blit(self.blank, locationxy)
 
-
+#dialogue box, I will have to check on the template on app.py
     def dialogue_box(self,text, locationxy, quit_key_pygame):
         dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
         box = pygame.image.load("images/gui/text_box.png")
@@ -168,8 +170,6 @@ class Level3(Level):
 #                                                    SUB CLASS
 ########################################################################################################################
 
-
-
 class Level1(Level):
     def __init__(self, clock, display,game_map_location,pygame_tile_image_list):
         Level.__init__(self, clock, display,game_map_location)
@@ -240,7 +240,7 @@ class Level1(Level):
         progress = 0
         score = 0
         is_E_pressed = False
-
+ #copy dialogue here
         self.dialogue_box("WH.. WHERE AM I..? I WAS JUST IN MY R-OOM, HOW DID I GET HERE?",[10,10],K_w)
         self.dialogue_box("ITS dARK HERE... I MISS MY FRIENDS A-ND Family...?", [10, 10], K_w)
         self.dialogue_box("I SEE A LIGHT... MAYBE I SHOULD FOLLOW IT?", [10, 10], K_w)

@@ -23,7 +23,7 @@ level3_tile_image_list = [pygame.image.load('images/level_3/map/Dirt1.jpg'),pyga
 
 level1_tile_image_list = [pygame.image.load('images/level_1/map/caveeee2.png'),pygame.image.load('images/level_1/map/caveee1.png'), "2", "3" ]
 
-level2_tile_image_list = [pygame.image.load('images/snow2.png'),pygame.image.load('images/snow1.png'), "2", "3"]
+#level2_tile_image_list = [pygame.image.load('images/snow2.png'),pygame.image.load('images/snow1.png'), "2", "3"]
 
 level3_collidable_indexs = [1,2,3]
 

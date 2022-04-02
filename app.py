@@ -15,7 +15,7 @@ display = pygame.Surface(constants.surface_size)
 
 level1 = level.Level1(clock, screen, "map/level_3/map_1.txt", constants.level1_tile_image_list)
 level3 = level.Level3(clock, screen, "map/level_3/map_0.txt", constants.level3_tile_image_list)
-level2 = level.level2(clock, screen, "map/level_3/map_2.txt", constants.level2_tile_image_list)
+#level2 = level.level2(clock, screen, "map/level_3/map_2.txt", constants.level2_tile_image_list)
 #I assume making level 2 here :) level = class and refers to the map
 
 ##### Main Menu down there for image, so i bet i can make the intro and the leaderboard set up
@@ -25,7 +25,7 @@ menu_image = pygame.image.load("images/Menuu.png")
 
 click = False
 
-#music. seems to only apply to main menu?
+#music. seems to only apply to main menu? -1 = forever, which is probably what we will stick to
 pygame.mixer.music.load("sounds/music/Victor.mp3")
 pygame.mixer.music.play(-1)
 
@@ -41,7 +41,7 @@ while True:
     my = my/5
 
     #print((mx,my))
-
+#how to make buttons, let's make intro and leaderboard here... and exit?
     button1_rect = pygame.rect.Rect(75,58,25,9)
     if button1_rect.collidepoint(mx,my):
         display.blit(pygame.image.load("images/playy.png"), [75,58])
@@ -49,7 +49,7 @@ while True:
             click = False
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
-
+#music to add per map
             if game_index == "Level_1":
                 ##Level 1 MUSIC
                 pygame.mixer.music.load("sounds/music/McAfee.mp3")
