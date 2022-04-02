@@ -11,18 +11,21 @@ pygame.init()
 
 screen = pygame.display.set_mode(constants.WINDOWSIZE, 0, 32)
 display = pygame.Surface(constants.surface_size)
+#this is for the screen
 
 level1 = level.Level1(clock, screen, "map/level_3/map_1.txt", constants.level1_tile_image_list)
 level3 = level.Level3(clock, screen, "map/level_3/map_0.txt", constants.level3_tile_image_list)
+level2 = level.level2(clock, screen, "map/level_3/map_2.txt", constants.level2_tile_image_list)
+#I assume making level 2 here :) level = class and refers to the map
 
-##### Main Menu
+##### Main Menu down there for image, so i bet i can make the intro and the leaderboard set up
 
 menu_image = pygame.image.load("images/Menuu.png")
 
 
 click = False
 
-#music
+#music. seems to only apply to main menu?
 pygame.mixer.music.load("sounds/music/Victor.mp3")
 pygame.mixer.music.play(-1)
 
@@ -112,3 +115,4 @@ while True:
 #     if constants.game_index == 1:
 #         level1.game()
 #         game_index_cycle()
+#Above refers to levels, copy and paste for level 2?
