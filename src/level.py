@@ -181,12 +181,14 @@ class Level1(Level):
         self.snake = Mobs.Snakeworm(self.display,[16*22,13*16],'images/level_1/Snakeworm',[16,16],[30,30],[30,30],[30])
 
         self.note_1 = Mobs.Stickyfingers(self.display,[16* 16, 17 *16],"images/stickyfingers.png")
+        self.note_2 = Mobs.Stickyfingers(self.display, [16 * 64, 21 * 16], "images/stickyfingers.png")
 
 
         self.mob_objects.append(self.slime)
         self.mob_objects.append(self.slime2)
         self.mob_objects.append(self.snake)
         self.notes.append(self.note_1)
+        self.notes.append(self.note_2)
 
         self.map_dictionary = {}
         n = 0

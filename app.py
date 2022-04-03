@@ -1,6 +1,6 @@
 import sys, pygame
 
-from src import functions, constants, level
+from src import functions, constants, level, Menu
 
 clock = pygame.time.Clock()
 
@@ -22,6 +22,7 @@ level2 = level.Level2(clock, screen, "map/level_3/map_2.txt", constants.level2_t
 menu_image = pygame.image.load("images/Menuu.png")
 
 click = False
+menu = Menu.Menu(clock)
 
 # music. seems to only apply to main menu? -1 = forever, which is probably what we will stick to
 pygame.mixer.music.load("sounds/music/Victor.mp3")
@@ -68,10 +69,14 @@ while True:
     if button2_rect.collidepoint(mx, my):
         display.blit(pygame.image.load("images/Intro.png"), [73, 72])
 
-    button3_rect = pygame.rect.Rect(52, 86, pygame.image.load("images/leaderboard.png").get_width(),
+    button3_rect = pygame.rect.Rect(52, 85, pygame.image.load("images/leaderboard.png").get_width(),
                                     pygame.image.load("images/leaderboard.png").get_height())
     if button3_rect.collidepoint(mx, my):
-        display.blit(pygame.image.load("images/leaderboard.png"), [52, 86])
+        display.blit(pygame.image.load("images/leaderboard.png"), [52, 85])
+        if click:
+            click = False
+            menu.leaderboard(display,screen)
+
 
     button4_rect = pygame.rect.Rect(76, 101, pygame.image.load("images/exit.png").get_width(),
                                     pygame.image.load("images/exit.png").get_height())

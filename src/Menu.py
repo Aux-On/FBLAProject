@@ -77,7 +77,6 @@ class Menu:
             mx,my = pygame.mouse.get_pos()
             mx = mx/5
             my = my/5
-            print(mx,my)
 
             menu_rect = pygame.rect.Rect(47,88,pygame.image.load("images/menus/game_over_main_menu_screen.png").get_width(),pygame.image.load("images/menus/game_over_main_menu_screen.png").get_height())
 
@@ -114,7 +113,6 @@ class Menu:
             mx, my = pygame.mouse.get_pos()
             mx = mx / 5
             my = my / 5
-            print(mx, my)
 
             menu_rect = pygame.rect.Rect(54, 68,
                                          pygame.image.load("images/mainmenupause.png").get_width(),
@@ -152,6 +150,57 @@ class Menu:
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
                         click = True
+
+            surf = pygame.transform.scale(display, constants.WINDOWSIZE)
+            screen.blit(surf, (0, 0))
+            pygame.display.update()
+            self.clock.tick(constants.game_frames_per_second)
+
+    def leaderboard(self, display, screen):
+
+        running = True
+        click = False
+
+        while running:
+            display.fill((0, 0, 0))
+
+            display.blit(pygame.image.load("images/leaderboardmen.png"), [0, 0])
+
+            mx, my = pygame.mouse.get_pos()
+            mx = mx / 5
+            my = my / 5
+            print(mx, my)
+
+            exit_rect = pygame.rect.Rect(10, 103,
+                                         pygame.image.load("images/exit2.png").get_width(),
+                                         pygame.image.load("images/exit2.png").get_height())
+            if exit_rect.collidepoint(mx, my):
+                display.blit(pygame.image.load("images/exit2.png"), [exit_rect.x, exit_rect.y])
+                if click:
+                    running = False
+                    return True
+
+            clear_rect = pygame.rect.Rect(135, 103,
+                                         pygame.image.load("images/press_clear.png").get_width(),
+                                         pygame.image.load("images/press_clear.png").get_height())
+            if clear_rect.collidepoint(mx, my):
+                display.blit(pygame.image.load("images/press_clear.png"), [clear_rect.x, clear_rect.y])
+                if click:
+                    running = False
+                    return True
+
+
+
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+                if event.type == MOUSEBUTTONUP:
+                    if event.button == 1:
+                        click = False
 
             surf = pygame.transform.scale(display, constants.WINDOWSIZE)
             screen.blit(surf, (0, 0))

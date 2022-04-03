@@ -193,6 +193,7 @@ class Slime:
         self.position = initial_locationxy
         self.image_location = base_image_location
         self.Rect = pygame.Rect(self.position[0], self.position[1],hitboxsizexy[0],hitboxsizexy[1])
+        self.health = 10
 
         self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
 
@@ -212,6 +213,18 @@ class Slime:
 
     def load_image(self, scroll):
         self.display.blit(self.animate.output_current_image(self.is_flipA, self.is_movingA, self.is_jumpingA), (self.Rect.x - scroll[0], self.Rect.y - scroll[1]))
+        self.loadhealth(self.display, ((self.Rect.x - 4) - scroll[0], (self.Rect.y - 10) - scroll[1]))
+
+    def loadhealth(self, display, locationxy):
+        image = "images/gui/health/health_" + str(int(self.health)) + ".png"
+
+
+        display.blit(pygame.transform.scale(pygame.image.load(image),[24,4]),locationxy)
+
+    def updatehealth (self, linear_health_transformation):
+
+        if (int(self.health+ linear_health_transformation) < 11 and int(self.health+ linear_health_transformation) > -1):
+            self.health += linear_health_transformation
 
     def adjust_for_collision(self, tiles):
         self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
@@ -271,6 +284,7 @@ class Slime:
 
         self.adjust_for_collision(collide_tiles)
         self.load_image(scrollxy)
+
 
 
         if self.collision_types['bottom']:
