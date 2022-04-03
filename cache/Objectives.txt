@@ -1,6 +1,6 @@
 Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an event)
-
-3.) How to get to new levels?
+2.) Practice how to present according to the guidelines
+3.) How to get to new levels? (Like getting into new levels after finishing one)
 4.) Set up map 2 and fix it visually
 5.) Desktop Icon
 6.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)

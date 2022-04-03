@@ -121,7 +121,7 @@ class Level3(Level):
 
         return collidable_tiles
 
-#           ^color stuff for background here!!
+#           ^For the tiles
 
     def game(self):
         diobox_test = False
