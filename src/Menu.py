@@ -68,6 +68,7 @@ class Menu:
         frames_ran = 0
         click = False
 
+
 #game over
         while running:
             display.fill((0,0,0))
@@ -186,8 +187,7 @@ class Menu:
             if clear_rect.collidepoint(mx, my):
                 display.blit(pygame.image.load("images/press_clear.png"), [clear_rect.x, clear_rect.y])
                 if click:
-                    running = False
-                    return True
+                    open('cache/Leaderboard.txt', 'w').close()
 
 
 

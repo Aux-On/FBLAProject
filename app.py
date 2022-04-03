@@ -57,9 +57,15 @@ while True:
                 pygame.mixer.music.load("sounds/music/Victor.mp3")
                 pygame.mixer.music.play(-1)
             if game_index == "Level_2":
-                pygame.mixer.music.stop()
-                pygame.mixer.music.unload()
-                # game_index = level2.game()
+                ##Level 2 MUSIC
+                pygame.mixer.music.load("sounds/music/SERENITY_AND.mp3")
+                pygame.mixer.music.play(-1)
+                game_index = level2.game()
+            if game_index == "Level_3":
+                ##Level 3 MUSIC
+                pygame.mixer.music.load("sounds/music/Finalle.mp3")
+                pygame.mixer.music.play(-1)
+                game_index = level3.game()
             # Reloading menu music
             pygame.mixer.music.load("sounds/music/Victor.mp3")
             pygame.mixer.music.play(-1)
