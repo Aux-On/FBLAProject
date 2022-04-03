@@ -1,5 +1,4 @@
 Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an event)
-Easy+ 2.) Movement of mobs in a pattern and push back
 
 3.) How to get to new levels?
 4.) Set up map 2 and fix it visually
