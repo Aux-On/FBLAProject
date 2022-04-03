@@ -1,18 +1,15 @@
 Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an event)
-Easy+ 2.) Movement of mobs in a pattern and push back
-
-3.) (For myself) Music figure out what fits or not
-
-Mid 4.) Dialogue
-5.) Inventory (Honestly not needed with how short game is)
+2.) Practice how to present according to the guidelines
+3.) How to get to new levels? (Like getting into new levels after finishing one)
+4.) Set up map 2 and fix it visually
+5.) Desktop Icon
 6.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)
-7.) Burning Car cutscene but top priority is first 3 levels!
-8.) Weather effects for Snow (if possible)
-9.) Is the isometric/RPG plan still going?
-10.) Will Sticky Notes disappear after being interacted with?
-11.) Also double check if my tiles look okay please! And I notice the cave tile used in Level 3?
-12.) Scoreboard AND Leaderboard after every map vs himself?
-13.) Fix the menu
+7.) NEW Ending Scene to be done today! Guy wakes up on monitor and lays down to cry
+8.) Weather effects for Snow (if possible) map 2
+9.) Mob location fix per map
+10.) note locations
+11.) Double check on snow tiles
+12.) Fix the menu (Intro + leaderboard, perhaps i can draw it)
 -------------------------------------------------------------------------------------------------------
 
 Easy - 10-20

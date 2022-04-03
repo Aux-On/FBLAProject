@@ -68,7 +68,7 @@ class Menu:
         frames_ran = 0
         click = False
 
-
+#game over
         while running:
             display.fill((0,0,0))
 
