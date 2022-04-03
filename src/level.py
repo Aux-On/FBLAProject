@@ -90,7 +90,7 @@ class Level3(Level):
 
 
         self.map_dictionary = {}
-        n = 1
+        n = 2
         for image in pygame_tile_image_list:
             self.map_dictionary[str(n)] = image
             # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
@@ -172,7 +172,7 @@ class Level1(Level):
         Level.__init__(self, clock, display,game_map_location)
         #super.__init__(clock,display,game_map_location)
 
-
+#mobs and players
         self.player = Mobs.Player(self.player_image,True, [16*9,16*16+1],self.display,[30],[30],[30])
 
 
@@ -399,3 +399,81 @@ class Level1(Level):
             #                                                    SUB CLASS                                                         #
             ########################################################################################################################
 #Attempt of level 2 begins here!
+class Level2(Level):
+    def __init__(self, clock, display, game_map_location, pygame_tile_image_list):
+        Level.__init__(self, clock, display, game_map_location)
+        self.clock = clock
+        self.display = pygame.Surface(constants.surface_size)
+        #self.screen = screen
+        self.player_image = 'images/level_3/Guyy'
+        self.game_map_location = game_map_location
+        self.TILESIZE = 16
+        self.small_font = functions.Font('images/gui/small_font.png', (150,100,139))
+        self.large_font = functions.Font('images/gui/large_font.png',(150,100,139))
+        self.blank = pygame.image.load("images/blank_screen.png")
+        self.menu = men.Menu(self.clock)
+        self.mob_objects = []
+        self.notes = []
+
+        self.player = Mobs.Player(self.player_image, True, [50, 50], self.display, [30], [30], [30])
+
+        self.map_dictionary = {}
+        n = 1
+        for image in pygame_tile_image_list:
+            self.map_dictionary[str(n)] = image
+            # { '1' : pygame_image_1 , '2' : pyga,e_image_2 ....  }
+            n += 1
+
+    #def loadANDreturn_collidable_tiles(self, colidable_index_list):
+            game_map = functions.read_map(self.game_map_location)
+            # list: [ [3,0,0,...] , [3,0,0,...] , ...]
+            collidable_tiles = []
+
+     #   y = 0
+      #  for row in game_map:
+       #     x = 0
+        #    for tile_num in row:
+            # not include"filer" blocks
+         #       if tile_num != '0' and tile_num != '3':
+          #          self.display.blit(self.map_dictionary[tile_num], (
+           #     x * self.TILESIZE - self.player.scroll[0], y * self.TILESIZE - self.player.scroll[1]))
+            ## Collidable blocks
+            #if tile_num == '1' or tile_num == '2' or tile_num == '3':
+             #   collidable_tiles.append(pygame.Rect(x * self.TILESIZE, y * self.TILESIZE, self.TILESIZE, self.TILESIZE))
+            #x += 1
+
+        #y += 1
+
+    #return collidable_tiles
+
+#does this refer to the transparent notes?
+    def load_score(self,score, locationxy):
+        self.blank.fill((0,0,0))
+        self.blank.set_colorkey((0,0,0))
+        self.small_font.render(self.blank, "score: " + str(score), (0, 0))
+        self.display.blit(self.blank, locationxy)
+
+#dialogue box, I will have to check on the template on app.py
+    def dialogue_box(self,text, locationxy, quit_key_pygame):
+        dialouge_surf = pygame.image.load("images/gui/lower_dialogue.png")
+        box = pygame.image.load("images/gui/text_box.png")
+        #dialouge_surf.set_colorkey((0,0,0))
+
+        running = True
+        while running:
+            self.display.blit(pygame.image.load("images/press_w.png"),[0,0])
+            self.small_font.render(dialouge_surf,text,(10,6))
+            self.display.blit(dialouge_surf,locationxy)
+            #dialouge_surf.blit(pygame.transform.scale(box, sizexy), (0, 0))
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == quit_key_pygame:
+                        running = False
+                        return False
+
+            surf = pygame.transform.scale(self.display, constants.WINDOWSIZE)
+            self.screen.blit(surf, (0, 0))
+            pygame.display.update()
+            self.clock.tick(constants.game_frames_per_second)

@@ -9,7 +9,7 @@ Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an 
 9.) Mob location fix (they have to be possible to jump through
 10.) note locations
 11.) Double check on snow tiles
-12.) Fix the menu
+12.) Fix the menu (Intro + leaderboard, perhaps i can draw it)
 -------------------------------------------------------------------------------------------------------
 
 Easy - 10-20
