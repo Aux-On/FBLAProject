@@ -9,9 +9,6 @@ from pygame.locals import *
 
 
 
-
-
-
 #Base Level Class
 #copy and paste this for the basic set up for level 2
 class Level:
@@ -137,7 +134,7 @@ class Level3(Level):
 
             functions.generate_clouds(self.display,50,['images/cloud1.png','images/cloud2.png'], cloud_idexes,1,cloudyvals,[self.player.scroll[0]*.5, self.player.scroll[1]*1.2])
 
-
+#useless code??
             self.player.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.slime.collidable_tiles = self.loadANDreturn_collidable_tiles(constants.level3_collidable_indexs)
             self.player.update()
@@ -259,7 +256,7 @@ class Level1(Level):
                 mobs.update(self.player.collidable_tiles,self.player.scroll)
 
 
-
+#mob collision, else is the idle
             for mob in self.mob_objects:
                 if self.player.Rect.colliderect(mob.Rect):
                     if self.player.is_movingLeft:
@@ -285,7 +282,7 @@ class Level1(Level):
                             self.player.extMove[0] += (random.randint(-1,1)*15)
                             self.player.extMove[1] += -10
 
-
+#here, EDIT the notes. but is each self.display for each note? 9 in total
             for note in self.notes:
                 note.update(self.player.collidable_tiles,self.player.scroll)
     
@@ -303,7 +300,7 @@ class Level1(Level):
                 running = self.menu.game_over(self.display,self.screen)
 
 
-            ##LIGHT
+            ##LIGHT for cave only
             for y in range(self.display.get_height()):
 
                 for x in range(self.display.get_width()):
