@@ -282,7 +282,7 @@ class Level1(Level):
                             self.player.extMove[0] += (random.randint(-1,1)*15)
                             self.player.extMove[1] += -10
 
-#here, EDIT the notes. but is each self.display for each note? 9 in total
+#here, EDIT the notes. but is each self.display for each note? 9 in total also need to keep in mind the false and true for the loops
             for note in self.notes:
                 note.update(self.player.collidable_tiles,self.player.scroll)
     
@@ -315,7 +315,7 @@ class Level1(Level):
                                 fc.append(col+50)
 
                         self.display.set_at((x,y), (fc[0], fc[1],fc[2]))
-            ##DIMS EVERYTHING ELSE
+            ##DIMS EVERYTHING ELSE (For Cave map*)
             for y in range(self.display.get_height()):
 
                 for x in range(self.display.get_width()):
@@ -355,7 +355,7 @@ class Level1(Level):
                 self.player.is_movingRight = False
                 self.player.is_movingLeft = False
 
-
+#no afterimage
             if not running:
                 self.display.fill((0, 0, 0))
                 if progress == 3:
@@ -398,3 +398,4 @@ class Level1(Level):
             ########################################################################################################################
             #                                                    SUB CLASS                                                         #
             ########################################################################################################################
+#Attempt of level 2 begins here!
