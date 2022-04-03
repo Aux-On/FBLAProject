@@ -6,7 +6,7 @@ Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an 
 6.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)
 7.) NEW Ending Scene to be done today! Guy wakes up on monitor and lays down to cry
 8.) Weather effects for Snow (if possible) map 2
-9.) Mob location fix (they have to be possible to jump through
+9.) Mob location fix per map
 10.) note locations
 11.) Double check on snow tiles
 12.) Fix the menu (Intro + leaderboard, perhaps i can draw it)
