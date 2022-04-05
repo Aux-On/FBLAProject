@@ -1,16 +1,12 @@
-Easy  1.) Ways to remove tiles after getting a sticky note ( Mid- activating an event)
 2.) Practice how to present according to the guidelines
-3.) How to get to new levels? (Like getting into new levels after finishing one)
-4.) Set up map 2 and fix it visually (2 tiles type)
-5.) Desktop Icon
-6.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)
-8.) Weather effects for Snow (if possible) map 2
-12.) Fix the menu (Intro + leaderboard, perhaps i can draw it)
+3.) Multiplayer? Second player is the arrow, and can damage mobs
+4.) Put in comments on everything!! (DESCRIBE)
+5.) Sound sfx? (cave for like water dripping for map 1, wind for map 2)
+6.) Weather effects for Snow (if possible) map 2
+7.) Fix the menu (Intro, perhaps i can draw it)
+8.) change background to pink red for map 3
+9.) List of sources
 -------------------------------------------------------------------------------------------------------
-
-Easy - 10-20
-Mid - 30
-long - 40
 
 ====================================================================================
 Dialogue

@@ -15,6 +15,7 @@ display = pygame.Surface(constants.surface_size)
 level1 = level.Level1(clock, screen, "map/level_3/map_1.txt", constants.level1_tile_image_list)
 level3 = level.Level3(clock, screen, "map/level_3/map_0.txt", constants.level3_tile_image_list)
 level2 = level.Level2(clock, screen, "map/level_3/map_2.txt", constants.level2_tile_image_list)
+end = level.End(clock,display,screen)
 # I assume making level 2 here :) level = class and refers to the map
 
 ##### Main Menu down there for image, so i bet i can make the intro and the leaderboard set up
@@ -66,6 +67,9 @@ while True:
                 pygame.mixer.music.load("sounds/music/Finalle.mp3")
                 pygame.mixer.music.play(-1)
                 game_index = level3.game()
+            if game_index == "End":
+                ##Level 3 MUSIC
+                end.game()
             # Reloading menu music
             pygame.mixer.music.load("sounds/music/Victor.mp3")
             pygame.mixer.music.play(-1)

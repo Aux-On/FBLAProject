@@ -69,6 +69,7 @@ class Menu:
         click = False
 
 
+
 #game over
         while running:
             display.fill((0,0,0))
