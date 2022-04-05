@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, os
 
 from pygame.locals import *
 from src import constants, functions
@@ -13,6 +13,7 @@ class Menu:
         # self.buttonInitImg = buttonInitImg
         # self.buttonFinalImg = buttonFinalImg
         self.clock = clock
+        self.font = functions.Font("images/gui/small_font.png",(255,255,255))
 
     # def main_menu(self, location_b1, location_b2):
     #
@@ -69,8 +70,6 @@ class Menu:
         click = False
 
 
-
-#game over
         while running:
             display.fill((0,0,0))
 
@@ -167,6 +166,21 @@ class Menu:
             display.fill((0, 0, 0))
 
             display.blit(pygame.image.load("images/leaderboardmen.png"), [0, 0])
+
+            y = 30
+            x = 40
+            index = 0
+            f = open("cache/Leaderboard.txt", "r")
+            for line in f:
+                c = str.strip(line)
+                self.font.render(display,"Player . . . " + c,(x,y))
+                index += 1
+                y += 20
+
+            f.close()
+
+
+
 
             mx, my = pygame.mouse.get_pos()
             mx = mx / 5
