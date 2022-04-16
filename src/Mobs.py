@@ -167,7 +167,6 @@ class Player(Mobs):
             if event.key == K_UP:
                 self.jump_index += 1
                 if self.jump_index == 1:
-                    pygame.mixer.Channel(1).play(pygame.mixer.Sound("sounds/sounds/slimejump-6913.wav"), 1)
                     self.playerdy = -8
                 if self.jump_index == 2:
                     self.playerdy = -8
