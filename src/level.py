@@ -137,6 +137,7 @@ class Level3(Level):
         self.notes.append(note_1)
         self.notes.append(note_2)
         self.notes.append(note_3)
+        removed_notes = []
 
         #Setting up some variables
         progress = 0
@@ -190,65 +191,74 @@ class Level3(Level):
 
             #Scanning Notes
             for note in self.notes:
-                if self.player.Rect.colliderect(note.Rect):
-                    self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
-                    if is_E_pressed:
-                        is_E_pressed = False
+                fakenote = False
+
+                for rnote in removed_notes:
+                    if note == rnote:
                         self.notes.remove(note)
-                        if (note == note_1):
-                            self.dialogue_box("Hello friend.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("I don't know why, but this place makes you oddly happy.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "It's ordinary, but there is no one around anymore to judge your existence.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "If only you can live in a rule-less place forever.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("...Where are we?",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                        fakenote = True
 
-                        if (note == note_2):
-                            self.dialogue_box(
-                                "Oh dear, are you having too much fun now?",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "I'm not going to beat around the bush anymore.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "I'm not going to run from the truth anymore, like you.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "You're pathetic for never reaching out to anyone near you.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "You played video games like these levels, but no one understood you.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "How will you escape loneliness if you never let people hear your voice?",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "You must contemplate your dark thoughts.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                if not fakenote:
+                    if self.player.Rect.colliderect(note.Rect):
+                        self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
+                        if is_E_pressed:
+                            is_E_pressed = False
+                            removed_notes.append(note)
+                            self.notes.remove(note)
+                            if (note == note_1):
+                                self.dialogue_box("Hello friend.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("I don't know why, but this place makes you oddly happy.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "It's ordinary, but there is no one around anymore to judge your existence.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "If only you can live in a rule-less place forever.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("...Where are we?",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
 
-                        if (note == note_3):
-                            self.dialogue_box(
-                                "This place reminds you of all the time you put into playing video games.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("But no one around you liked or understood the things you did.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("No one bothered to value you with their precious time.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("And when they did, you ignored them and continued to play your games.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("I hope this place makes you contemplate your past. ",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("Remember? I'm just your conscience, an imaginary friend. Wake up.",
-                                              [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                            if (note == note_2):
+                                self.dialogue_box(
+                                    "Oh dear, are you having too much fun now?",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "I'm not going to beat around the bush anymore.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "I'm not going to run from the truth anymore, like you.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "You're pathetic for never reaching out to anyone near you.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "You played video games like these levels, but no one understood you.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "How will you escape loneliness if you never let people hear your voice?",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "You must contemplate your dark thoughts.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
 
-                        progress += 1
-                        score += 20
+                            if (note == note_3):
+                                self.dialogue_box(
+                                    "This place reminds you of all the time you put into playing video games.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("But no one around you liked or understood the things you did.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("No one bothered to value you with their precious time.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("And when they did, you ignored them and continued to play your games.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("I hope this place makes you contemplate your past. ",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("Remember? I'm just your conscience, an imaginary friend. Wake up.",
+                                                  [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+
+                            progress += 1
+                            score += 20
 
 
             if progress == 0:
@@ -285,6 +295,13 @@ class Level3(Level):
                         f.writelines(lines)
                     return "End"
                 else:
+                    with open("cache/Leaderboard.txt", "r+") as f:
+                        lines = f.readlines()
+                        current = int(str.strip(lines[-1]))
+                        current += score
+                        lines[-1] = str(current) + "\n"
+                        f.seek(0)
+                        f.writelines(lines)
                     return "Level_3"
 
             for event in pygame.event.get():
@@ -387,6 +404,7 @@ class Level1(Level):
         self.notes.append(note_1)
         self.notes.append(note_2)
         self.notes.append(note_3)
+        removed_notes = []
 
         diobox_test = False
         pause = False
@@ -457,33 +475,42 @@ class Level1(Level):
                 note.update(self.player.collidable_tiles,self.player.scroll)
     
             for note in self.notes:
-                if self.player.Rect.colliderect(note.Rect):
-                    self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
-                    if is_E_pressed:
-                        is_E_pressed = False
+                fakenote = False
+
+                for rnote in removed_notes:
+                    if note == rnote:
                         self.notes.remove(note)
-                        if (note == note_1):
-                            self.dialogue_box("Hello friend!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("I hope it's you that's reading this...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("I seem to be lost in a cave, so if you could, meet me somewhere brighter.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("I'll leave 2 other notes in this cave since I still have more pieces of paper left on me.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("See you friend!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                        fakenote = True
 
-                        if (note == note_2):
-                            self.dialogue_box("You know, while I am here, I do want to address something that's been on my mind.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("I know that you are my best friend, but I hope you find other people to talk to.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("Not that I don't want to still hangout with you, but you are always alone, you know?",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                if not fakenote:
+                    if self.player.Rect.colliderect(note.Rect):
+                        self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
+                        if is_E_pressed:
+                            is_E_pressed = False
+                            removed_notes.append(note)
+                            self.notes.remove(note)
+                            if (note == note_1):
+                                self.dialogue_box("Hello friend!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("I hope it's you that's reading this...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("I seem to be lost in a cave, so if you could, meet me somewhere brighter.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("I'll leave 2 other notes in this cave since I still have more pieces of paper left on me.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("See you friend!",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
 
-                        if (note == note_3):
-                            self.dialogue_box("This cave is really creepy. I barely managed to dodge the snake-worm... thingys...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("They really sting, but just jump over them, and they can't reach you.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("Remember, even if you are afraid of what's in the dark...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("Breathe and step forward, like we have done before.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("On a brighter note, I finally see light! It's quite chilly though.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
-                            self.dialogue_box("See you soon hopefully?",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                            if (note == note_2):
+                                self.dialogue_box("You know, while I am here, I do want to address something that's been on my mind.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("I know that you are my best friend, but I hope you find other people to talk to.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("Not that I don't want to still hangout with you, but you are always alone, you know?",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
 
-                        progress += 1
-                        score += 20
+                            if (note == note_3):
+                                self.dialogue_box("This cave is really creepy. I barely managed to dodge the snake-worm... thingys...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("They really sting, but just jump over them, and they can't reach you.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("Remember, even if you are afraid of what's in the dark...",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("Breathe and step forward, like we have done before.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("On a brighter note, I finally see light! It's quite chilly though.",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+                                self.dialogue_box("See you soon hopefully?",[10,self.display.get_height() - (self.display.get_height()/2.5)],K_w)
+
+                            progress += 1
+                            score += 20
 
             if self.player.health == 0:
                 running = self.menu.game_over(self.display,self.screen)
@@ -559,6 +586,13 @@ class Level1(Level):
                         f.writelines(lines)
                     return "Level_2"
                 else:
+                    with open("cache/Leaderboard.txt", "r+") as f:
+                        lines = f.readlines()
+                        current = int(str.strip(lines[-1]))
+                        current += score
+                        lines[-1] = str(current) + "\n"
+                        f.seek(0)
+                        f.writelines(lines)
                     return "Level_1"
 
             for event in pygame.event.get():
@@ -595,6 +629,8 @@ class Level1(Level):
             self.screen.blit(surf, (0, 0))
             pygame.display.update()
             self.clock.tick(constants.game_frames_per_second)
+
+
             ########################################################################################################################
             #                                                    SUB CLASS                                                         #
             ########################################################################################################################
@@ -682,6 +718,7 @@ class Level2(Level):
         self.notes.append(note_1)
         self.notes.append(note_2)
         self.notes.append(note_3)
+        removed_notes = []
 
         collided = False
 
@@ -731,6 +768,7 @@ class Level2(Level):
             # mob collision, else is the idle
             for mob in self.mob_objects:
                 if self.player.Rect.colliderect(mob.Rect):
+                    score -= 1
                     if self.player.is_movingLeft:
                         self.player.is_movingLeft = False
                         self.player.updatehealth(-1)
@@ -758,85 +796,94 @@ class Level2(Level):
                 note.update(self.player.collidable_tiles, self.player.scroll)
 
             for note in self.notes:
-                if self.player.Rect.colliderect(note.Rect):
-                    self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
-                    if is_E_pressed:
-                        is_E_pressed = False
+                fakenote = False
+
+                for rnote in removed_notes:
+                    if note == rnote:
                         self.notes.remove(note)
-                        if (note == note_1):
-                            self.dialogue_box("Hello friend!",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box("If you made it out of there, you should be in some snowy place.",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box(
-                                "I may not know what you think of this place, but it is relaxing.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "I could honestly use this as a break, but I'm afraid of frostbite...",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("I'll leave more notes, so you know where I am!",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box(
-                                "In the meantime, I'm going to explore, feel free to take in the scenery.",
-                                [10,
-                                 self.display.get_height() - (self.display.get_height() / 2.5)],
-                                K_w)
-                            self.dialogue_box("P.S. be careful of the ghosts, they look nice, but they suck!",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box("See you friend!",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
+                        fakenote = True
 
-                        if (note == note_2):
-                            self.dialogue_box(
-                                "I do know that you have been feeling quite depressed these days.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "You think people are scary, but what if we work together to face them?",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "Not every person should be too terrible",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "Someone out there would care about you.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "Just please try, but don't push yourself.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                if not fakenote:
+                    if self.player.Rect.colliderect(note.Rect):
+                        self.display.blit(pygame.image.load("images/gui/pressEtoInteract.png"), [0, 0])
+                        if is_E_pressed:
+                            is_E_pressed = False
+                            removed_notes.append(note)
+                            self.notes.remove(note)
+                            if (note == note_1):
+                                self.dialogue_box("Hello friend!",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box("If you made it out of there, you should be in some snowy place.",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box(
+                                    "I may not know what you think of this place, but it is relaxing.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "I could honestly use this as a break, but I'm afraid of frostbite...",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("I'll leave more notes, so you know where I am!",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box(
+                                    "In the meantime, I'm going to explore, feel free to take in the scenery.",
+                                    [10,
+                                     self.display.get_height() - (self.display.get_height() / 2.5)],
+                                    K_w)
+                                self.dialogue_box("P.S. be careful of the ghosts, they look nice, but they suck!",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box("See you friend!",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
 
-                        if (note == note_3):
-                            self.dialogue_box(
-                                "I really hope you have been taking in the scenery.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box(
-                                "This icy weather reminds me-",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("Remember that one time you found an apple still growing in the winter?",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box("Then you cooked an apple pie just for you?",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                            self.dialogue_box(
-                                "It was burnt and crispy, but still delicious. Memories like these do warm me.",
-                                [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
-                            self.dialogue_box("You do feel something is warmer up ahead, see you soon...",
-                                              [10,
-                                               self.display.get_height() - (self.display.get_height() / 2.5)],
-                                              K_w)
-                        progress += 1
-                        score += 20
+                            if (note == note_2):
+                                self.dialogue_box(
+                                    "I do know that you have been feeling quite depressed these days.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "You think people are scary, but what if we work together to face them?",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "Not every person should be too terrible",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "Someone out there would care about you.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "Just please try, but don't push yourself.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+
+                            if (note == note_3):
+                                self.dialogue_box(
+                                    "I really hope you have been taking in the scenery.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box(
+                                    "This icy weather reminds me-",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("Remember that one time you found an apple still growing in the winter?",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box("Then you cooked an apple pie just for you?",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                                self.dialogue_box(
+                                    "It was burnt and crispy, but still delicious. Memories like these do warm me.",
+                                    [10, self.display.get_height() - (self.display.get_height() / 2.5)], K_w)
+                                self.dialogue_box("You do feel something is warmer up ahead, see you soon...",
+                                                  [10,
+                                                   self.display.get_height() - (self.display.get_height() / 2.5)],
+                                                  K_w)
+                            progress += 1
+                            score += 20
             # here, EDIT the notes. but is each self.display for each note? 9 in total also need to keep in mind the false and true for the loops
                     # copy dialogue here
 
@@ -881,18 +928,19 @@ class Level2(Level):
                         f.writelines(lines)
                     return "Level_3"
                 else:
+                    with open("cache/Leaderboard.txt", "r+") as f:
+                        lines = f.readlines()
+                        current = int(str.strip(lines[-1]))
+                        current += score
+                        lines[-1] = str(current) + "\n"
+                        f.seek(0)
+                        f.writelines(lines)
                     return "Level_2"
 
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
                 if event.type == KEYUP:
-                    if event.key == K_r:
-                        isr = False
-                    if event.key == K_g:
-                        isg = False
-                    if event.key == K_b:
-                        isb = False
                     if event.key == K_w:
                         is_E_pressed = False
                 if event.type == KEYDOWN:
@@ -905,12 +953,6 @@ class Level2(Level):
                         diobox_test = True
                     if event.key == K_e:
                         is_E_pressed = True
-                    if event.key == K_r:
-                        isr = True
-                    if event.key == K_g:
-                        isg = True
-                    if event.key == K_b:
-                        isb = True
                 self.player.check_event(event)
 
             surf = pygame.transform.scale(self.display, constants.WINDOWSIZE)
