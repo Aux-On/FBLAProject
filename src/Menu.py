@@ -36,7 +36,6 @@ class Menu:
     #                 running = False
     #                 index = 1
     #                 return index
-    #
     #         button_2 = pygame.Rect(location_b2[0], location_b2[0], self.buttonInitImg.get_width(), self.buttonInitImg.get_height())
     #         self.surface.blit(self.buttonInitImg, location_b2)
     #
